@@ -13,6 +13,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -32,6 +34,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "pessoas")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Pessoa extends EntidadeBaseAudicao {
 
     @Column(name = "nome", nullable = false, columnDefinition = "VARCHAR(50)")

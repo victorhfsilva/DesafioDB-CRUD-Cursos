@@ -15,6 +15,7 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,7 +29,7 @@ import lombok.ToString;
 @ToString()
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Table(name = "alunos")
 public class Aluno extends Pessoa {
     
     @Column(name = "matricula", nullable = false, unique = true, columnDefinition = "VARCHAR(10)")

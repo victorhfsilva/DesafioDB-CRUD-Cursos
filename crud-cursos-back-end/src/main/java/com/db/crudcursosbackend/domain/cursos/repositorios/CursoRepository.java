@@ -8,10 +8,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
 import com.db.crudcursosbackend.domain.cursos.Curso;
-import com.db.crudcursosbackend.domain.usuario.professor.Professor;
-
 
 @RepositoryRestResource(path="cursos")
 public interface CursoRepository extends JpaRepository<Curso, Long>{
