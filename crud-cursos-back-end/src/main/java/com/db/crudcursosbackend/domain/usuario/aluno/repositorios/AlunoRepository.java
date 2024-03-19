@@ -45,13 +45,13 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
     @Query("SELECT a FROM Aluno a WHERE a.contato.celular = :celular")
     Optional<Aluno> findByCelular(String celular);
 
-    @Query("SELECT a FROM Aluno a JOIN a.enderecos e WHERE e.cidade = :cidade")
+    @Query("SELECT a FROM Aluno a JOIN a.enderecos e WHERE e.cidade LIKE %:cidade%")
     List<Aluno> findByCidade(@Param("cidade") String cidade);
 
-    @Query("SELECT a FROM Aluno a JOIN a.enderecos e WHERE e.rua = :rua")
+    @Query("SELECT a FROM Aluno a JOIN a.enderecos e WHERE e.rua LIKE %:rua%")
     List<Aluno> findByRua(@Param("rua") String rua);
 
-    @Query("SELECT a FROM Aluno a JOIN a.enderecos e WHERE e.bairro = :bairro")
+    @Query("SELECT a FROM Aluno a JOIN a.enderecos e WHERE e.bairro LIKE %:bairro%")
     List<Aluno> findByBairro(@Param("bairro") String bairro);
 
     @Query("SELECT a FROM Aluno a JOIN a.enderecos e WHERE e.cep = :cep")
@@ -59,4 +59,7 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
 
     @Query("SELECT a FROM Aluno a JOIN a.enderecos e WHERE e.estado = :estado")
     List<Aluno> findByEstado(@Param("estado") Estado estado);
+
+    @Query("SELECT a FROM Aluno a JOIN a.cursos c WHERE c.nome LIKE %:nome%")
+    List<Aluno> findByCursoNome(@Param("nome") String nome);
 }

@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 import com.db.crudcursosbackend.domain.usuario.professor.Professor;
+import com.db.crudcursosbackend.domain.usuario.aluno.Aluno;
 import com.db.crudcursosbackend.domain.usuario.estado.Estado;
 
 @RepositoryRestResource(path="professores")
@@ -41,13 +42,13 @@ public interface ProfessorRepository extends JpaRepository<Professor, Long> {
     @Query("SELECT p FROM Professor p WHERE p.contato.celular = :celular")
     Optional<Professor> findByCelular(String celular);
 
-    @Query("SELECT p FROM Professor p JOIN p.enderecos e WHERE e.cidade = :cidade")
+    @Query("SELECT p FROM Professor p JOIN p.enderecos e WHERE e.cidade LIKE %:cidade%")
     List<Professor> findByCidade(@Param("cidade") String cidade);
 
-    @Query("SELECT p FROM Professor p JOIN p.enderecos e WHERE e.rua = :rua")
+    @Query("SELECT p FROM Professor p JOIN p.enderecos e WHERE e.rua LIKE %:rua%")
     List<Professor> findByRua(@Param("rua") String rua);
 
-    @Query("SELECT p FROM Professor p JOIN p.enderecos e WHERE e.bairro = :bairro")
+    @Query("SELECT p FROM Professor p JOIN p.enderecos e WHERE e.bairro LIKE %:bairro%")
     List<Professor> findByBairro(@Param("bairro") String bairro);
 
     @Query("SELECT p FROM Professor p JOIN p.enderecos e WHERE e.cep = :cep")
@@ -55,4 +56,7 @@ public interface ProfessorRepository extends JpaRepository<Professor, Long> {
 
     @Query("SELECT p FROM Professor p JOIN p.enderecos e WHERE e.estado = :estado")
     List<Professor> findByEstado(@Param("estado") Estado estado);
+
+    @Query("SELECT p FROM Professor p JOIN p.cursos c WHERE c.nome LIKE %:nome%")
+    List<Professor> findByCursoNome(@Param("nome") String nome);
 }
