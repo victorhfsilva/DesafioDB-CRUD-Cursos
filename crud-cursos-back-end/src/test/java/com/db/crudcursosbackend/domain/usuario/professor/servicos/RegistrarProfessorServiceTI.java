@@ -33,7 +33,6 @@ public class RegistrarProfessorServiceTI {
     @Autowired
     private RegistrarProfessorService registrarProfessorService;
 
-
     private ContatoBuilder contatoBuilder;
     private EnderecoBuilder enderecoBuilder;
     private CursoBuilder cursoBuilder;
