@@ -11,8 +11,9 @@ import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -26,7 +27,7 @@ import lombok.ToString;
 @ToString()
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "professores")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Professor extends Pessoa {
     
     @Column(name = "salario", nullable = false, columnDefinition = "NUMERIC(9,2)")

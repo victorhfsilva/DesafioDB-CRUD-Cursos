@@ -9,13 +9,14 @@ import com.db.crudcursosbackend.domain.usuario.papel.Papel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -29,7 +30,8 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper=false)
 @ToString()
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@MappedSuperclass
+@Entity
+@Table(name = "pessoas")
 public class Pessoa extends EntidadeBaseAudicao {
 
     @Column(name = "nome", nullable = false, columnDefinition = "VARCHAR(50)")

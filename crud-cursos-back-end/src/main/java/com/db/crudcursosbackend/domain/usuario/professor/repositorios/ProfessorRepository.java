@@ -10,7 +10,7 @@ import org.springframework.data.rest.core.annotation.RestResource;
 import com.db.crudcursosbackend.domain.usuario.professor.Professor;
 import com.db.crudcursosbackend.domain.usuario.estado.Estado;
 
-@RepositoryRestResource(path="alunos")
+@RepositoryRestResource(path="professores")
 public interface ProfessorRepository extends JpaRepository<Professor, Long> {
     
     @RestResource(exported = false)

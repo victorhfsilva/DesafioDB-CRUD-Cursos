@@ -10,10 +10,11 @@ import com.db.crudcursosbackend.domain.usuario.papel.Papel;
 import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -27,10 +28,10 @@ import lombok.ToString;
 @ToString()
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "alunos")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Aluno extends Pessoa {
     
-    @Column(name = "nome", nullable = false, unique = true, columnDefinition = "VARCHAR(10)")
+    @Column(name = "matricula", nullable = false, unique = true, columnDefinition = "VARCHAR(10)")
     private String matricula;
 
     @Column(name = "data_ingresso", nullable = false)
