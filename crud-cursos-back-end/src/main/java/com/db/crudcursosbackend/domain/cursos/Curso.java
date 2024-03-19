@@ -20,8 +20,8 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper=false)
-@ToString()
+@EqualsAndHashCode(callSuper=false, exclude = {"professor"})
+@ToString(exclude = {"professor"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "cursos")
@@ -43,24 +43,24 @@ public class Curso extends EntidadeBaseAudicao {
     @ManyToMany(mappedBy = "cursos")
     List<Aluno> alunos;
 
-        public Curso(
-            boolean ativo,
-            String criadoPor, 
-            String atualizadoPor, 
-            String desativadoPor, 
-            LocalDateTime criadoAs, 
-            LocalDateTime atualizadoAs, 
-            LocalDateTime desativadoAs,
-            String nome,
-            String descricao,
-            int cargaHoraria,
-            Professor professor,
-            List<Aluno> alunos ) {      
-        super(ativo, criadoPor, atualizadoPor, desativadoPor, criadoAs, atualizadoAs, desativadoAs);
-        this.nome = nome;
-        this.descricao = descricao;
-        this.cargaHoraria = cargaHoraria;
-        this.professor = professor;
-        this.alunos = alunos;
+    public Curso(
+        boolean ativo,
+        String criadoPor, 
+        String atualizadoPor, 
+        String desativadoPor, 
+        LocalDateTime criadoAs, 
+        LocalDateTime atualizadoAs, 
+        LocalDateTime desativadoAs,
+        String nome,
+        String descricao,
+        int cargaHoraria,
+        Professor professor,
+        List<Aluno> alunos ) {      
+            super(ativo, criadoPor, atualizadoPor, desativadoPor, criadoAs, atualizadoAs, desativadoAs);
+            this.nome = nome;
+            this.descricao = descricao;
+            this.cargaHoraria = cargaHoraria;
+            this.professor = professor;
+            this.alunos = alunos;
     }
 }
