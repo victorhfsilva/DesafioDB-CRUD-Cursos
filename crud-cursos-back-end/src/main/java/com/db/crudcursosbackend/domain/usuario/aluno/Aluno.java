@@ -10,10 +10,6 @@ import com.db.crudcursosbackend.domain.usuario.papel.Papel;
 import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -38,12 +34,7 @@ public class Aluno extends Pessoa {
     @Column(name = "data_ingresso", nullable = false)
     private LocalDate dataDeIngresso;
 
-    @ManyToMany
-    @JoinTable(
-        name = "alunos_cursos",
-        joinColumns = @JoinColumn(name = "aluno_id"),
-        inverseJoinColumns = @JoinColumn(name = "curso_id")
-    )
+    @ManyToMany(mappedBy = "alunos")
     private List<Curso> cursos;
 
     public Aluno(

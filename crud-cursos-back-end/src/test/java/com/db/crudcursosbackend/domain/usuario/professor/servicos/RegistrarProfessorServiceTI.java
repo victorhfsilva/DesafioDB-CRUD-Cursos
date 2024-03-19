@@ -1,18 +1,13 @@
 package com.db.crudcursosbackend.domain.usuario.professor.servicos;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.time.LocalDate;
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlGroup;
-
 import com.db.crudcursosbackend.domain.cursos.Curso;
 import com.db.crudcursosbackend.domain.cursos.CursoBuilder;
 import com.db.crudcursosbackend.domain.usuario.contato.Contato;
@@ -21,8 +16,6 @@ import com.db.crudcursosbackend.domain.usuario.endereco.Endereco;
 import com.db.crudcursosbackend.domain.usuario.endereco.EnderecoBuilder;
 import com.db.crudcursosbackend.domain.usuario.estado.Estado;
 import com.db.crudcursosbackend.domain.usuario.papel.Papel;
-import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
-import com.db.crudcursosbackend.domain.usuario.pessoa.PessoaBuilder;
 import com.db.crudcursosbackend.domain.usuario.professor.Professor;
 import com.db.crudcursosbackend.domain.usuario.professor.ProfessorBuilder;
 

@@ -8,6 +8,8 @@ import com.db.crudcursosbackend.domain.usuario.contato.Contato;
 import com.db.crudcursosbackend.domain.usuario.endereco.Endereco;
 import com.db.crudcursosbackend.domain.usuario.papel.Papel;
 import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -32,7 +34,7 @@ public class Professor extends Pessoa {
     @Column(name = "salario", columnDefinition = "NUMERIC(9,2)", nullable = false)
     private double salario;
 
-    @OneToMany(mappedBy = "professor", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "professor", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Curso> cursos;
 
         public Professor(
