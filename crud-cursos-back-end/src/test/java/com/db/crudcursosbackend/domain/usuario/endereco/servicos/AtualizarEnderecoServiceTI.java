@@ -1,7 +1,6 @@
 package com.db.crudcursosbackend.domain.usuario.endereco.servicos;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
-import java.time.LocalDate;
 import com.db.crudcursosbackend.domain.usuario.endereco.Endereco;
 import com.db.crudcursosbackend.domain.usuario.endereco.EnderecoBuilder;
 import com.db.crudcursosbackend.domain.usuario.estado.Estado;
-import com.db.crudcursosbackend.domain.usuario.papel.Papel;
 import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
-import com.db.crudcursosbackend.domain.usuario.pessoa.repositorio.PessoaRepository;
-import com.db.crudcursosbackend.domain.usuario.aluno.AlunoBuilder;
 import com.db.crudcursosbackend.domain.usuario.aluno.repositorios.AlunoRepository;
 
 @SpringBootTest
@@ -54,7 +49,9 @@ class AtualizarEnderecoServiceTI {
                                 .pessoa(pessoa)
                                 .build();
     
-        Endereco enderecoSalvo = atualizarEnderecoService.atualizar(1L, novoEndereco);
+        Long id = pessoa.getEnderecos().get(0).getId();
+
+        Endereco enderecoSalvo = atualizarEnderecoService.atualizar(id, novoEndereco);
 
         assertEquals(novoEndereco, enderecoSalvo);
         assertEquals(pessoa.getCpf(), enderecoSalvo.getPessoa().getCpf());

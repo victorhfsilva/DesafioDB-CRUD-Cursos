@@ -7,7 +7,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
+
+import com.db.crudcursosbackend.domain.usuario.aluno.repositorios.AlunoRepository;
 import com.db.crudcursosbackend.domain.usuario.endereco.repositorios.EnderecoRepository;
+import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -19,16 +22,22 @@ class ExcluirEnderecoServiceTI {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
+    @Autowired
+    private AlunoRepository alunoRepository;
+
     @Test
     @SqlGroup({
         @Sql(scripts =  "/db/limpar.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
-        @Sql(scripts = "/db/dados.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+        @Sql(scripts = "/db/dados.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
     })
     void dadaUmEnderecoValidoSalvoNoBancoDeDados_QuandoExcluido_NaoDeveEncontrarEntidadeNoBancoDeDados(){
         
-        excluirService.excluir(1L);
+        Pessoa pessoa = alunoRepository.findByRua("Rua B").get(0);
+        Long id = pessoa.getEnderecos().get(0).getId();
+
+        excluirService.excluir(id);
         
-        assertFalse(enderecoRepository.findById(1L).isPresent());
+        assertFalse(enderecoRepository.findById(id).isPresent());
         
     }
 }

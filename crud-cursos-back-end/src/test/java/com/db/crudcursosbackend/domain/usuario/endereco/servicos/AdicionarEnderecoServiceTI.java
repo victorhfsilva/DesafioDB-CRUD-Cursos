@@ -34,7 +34,7 @@ public class AdicionarEnderecoServiceTI {
     @Test
     @SqlGroup({
         @Sql(scripts =  "/db/limpar.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
-        @Sql(scripts = "/db/dados.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+        @Sql(scripts = "/db/dados.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
     })
     void dadaUmEnderecoValido_QuandoSalvaNoBancoDeDados_DeveSerAssociadoAPessoaCorreta() {
         Pessoa pessoaSalva = pessoaRepository.findByCpf("22222222222")
