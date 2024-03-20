@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlGroup;
+
 import com.db.crudcursosbackend.domain.cursos.Curso;
 import com.db.crudcursosbackend.domain.cursos.CursoBuilder;
 import com.db.crudcursosbackend.domain.usuario.contato.Contato;
@@ -40,6 +43,9 @@ public class RegistrarProfessorServiceTI {
     }
 
     @Test
+    @SqlGroup({
+        @Sql(scripts =  "/db/limpar.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    })
     void dadaUmProfessorValido_QuandoRegistrado_DeveRetornarProfessorCorreto() {
         Contato contato = contatoBuilder.celular("12345614567")
                                             .email("meu_email@email.com")
