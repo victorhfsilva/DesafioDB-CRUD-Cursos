@@ -2,9 +2,7 @@ package com.db.crudcursosbackend.domain.usuario.professor.servicos;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
 import com.db.crudcursosbackend.domain.cursos.Curso;
 import com.db.crudcursosbackend.domain.cursos.repositorios.CursoRepository;
 import com.db.crudcursosbackend.domain.usuario.contato.Contato;
@@ -15,7 +13,6 @@ import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import com.db.crudcursosbackend.domain.usuario.professor.Professor;
 import com.db.crudcursosbackend.domain.usuario.professor.interfaces.IRegistrarProfessorService;
 import com.db.crudcursosbackend.domain.usuario.professor.repositorios.ProfessorRepository;
-
 import lombok.AllArgsConstructor;
 
 @Service

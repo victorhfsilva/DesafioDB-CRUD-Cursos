@@ -4,5 +4,5 @@ import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import com.db.crudcursosbackend.domain.cursos.Curso;
 
 public interface IRegistrarCursoService {
-    Curso registrar(Curso curso, Pessoa editor);
+    Curso registrar(Curso curso, String cpfProfessor, Pessoa editor);
 }
