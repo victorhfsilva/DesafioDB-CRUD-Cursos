@@ -20,7 +20,7 @@ public class ExcluirProfessorService implements IExcluirProfessorService {
     @Override
     public Professor excluir(String cpf) {
 
-        Professor professor = professorRepository.findByCpf("11111111111").orElseThrow();
+        Professor professor = professorRepository.findByCpf(cpf).orElseThrow();
         List<Curso> cursos = professor.getCursos();
 
         if (cursos != null){
@@ -31,9 +31,9 @@ public class ExcluirProfessorService implements IExcluirProfessorService {
             });
         }
 
-        Professor pessoa = professorRepository.findByCpf(cpf).orElseThrow();
-        professorRepository.delete(pessoa);
-        return pessoa;
+        Professor professorSalvo = professorRepository.findByCpf(cpf).orElseThrow();
+        professorRepository.delete(professorSalvo);
+        return professorSalvo;
     }
     
 }

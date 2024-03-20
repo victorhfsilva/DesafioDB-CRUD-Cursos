@@ -1,0 +1,47 @@
+package com.db.crudcursosbackend.domain.usuario.aluno.servicos;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.NoSuchElementException;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlGroup;
+import com.db.crudcursosbackend.domain.usuario.aluno.repositorios.AlunoRepository;
+
+@SpringBootTest
+@ActiveProfiles("test")
+class ExcluirAlunoServiceTI {
+    
+    @Autowired
+    private ExcluirAlunoService excluirService;
+
+    @Autowired
+    private AlunoRepository alunoRepository;
+
+    @Test
+    @SqlGroup({
+        @Sql(scripts =  "/db/limpar.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+        @Sql(scripts = "/db/dados.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    })
+    void dadaUmAlunoValidoSalvaNoBancoDeDados_QuandoExcluida_NaoDeveEncontrarEntidadeNoBancoDeDados(){
+        
+        excluirService.excluir("22222222222");
+        
+        assertFalse(alunoRepository.findByCpf("22222222222").isPresent());
+    }
+
+    @Test
+    @SqlGroup({
+        @Sql(scripts =  "/db/limpar.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+        @Sql(scripts = "/db/dados.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    })
+    void dadaUmAlunoValidaSalvaNoBancoDeDados_QuandoExcluida_DeveLancarExcecao(){
+        
+        assertThrows(NoSuchElementException.class, () -> {
+            excluirService.excluir("11111111111");
+        });
+    }
+}
