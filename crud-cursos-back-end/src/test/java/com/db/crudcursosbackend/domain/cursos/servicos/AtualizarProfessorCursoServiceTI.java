@@ -1,7 +1,6 @@
 package com.db.crudcursosbackend.domain.cursos.servicos;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,21 +8,18 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import com.db.crudcursosbackend.domain.cursos.Curso;
-import com.db.crudcursosbackend.domain.cursos.CursoBuilder;
+import com.db.crudcursosbackend.domain.cursos.repositorios.CursoRepository;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class AtualizarCursoServiceTI {
+public class AtualizarProfessorCursoServiceTI {
     
     @Autowired
-    private AtualizarCursoService atualizarCursoService;
+    private AtualizarProfessorCursoService atualizarProfessorCursoService;
 
-    private CursoBuilder cursoBuilder;
+    @Autowired
+    private CursoRepository cursoRepository;
 
-    @BeforeEach
-    private void configurar() {
-        cursoBuilder = new CursoBuilder();
-    }
 
     @Test
     @SqlGroup({
@@ -31,17 +27,12 @@ public class AtualizarCursoServiceTI {
         @Sql(scripts = "/db/dados.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     })
     void dadoUmCursoValidoSalvaNoBancoDeDados_QuandoCursoEhAtualizado_DeveRetornarCursoCorretoPorId(){
+        cursoRepository.findById(1L).orElseThrow();
 
-        Curso novoCurso = cursoBuilder.descricao("Portugês Inclusivo")
-                                        .cargaHoraria(300)
-                                        .nome("Português")
-                                        .build();
+        Curso cursoAtualizado = atualizarProfessorCursoService.atualizar(1L, "44444444444", null);
 
-        Curso cursoAtualizado = atualizarCursoService.atualizar(1L, novoCurso, null);
-
-        assertEquals(novoCurso.getNome(), cursoAtualizado.getNome());
-        assertEquals(novoCurso.getDescricao(), cursoAtualizado.getDescricao());
-        assertEquals(novoCurso.getCargaHoraria(), cursoAtualizado.getCargaHoraria());
+        assertEquals("44444444444", cursoAtualizado.getProfessor().getCpf());
+        assertEquals("Dois", cursoAtualizado.getProfessor().getSobrenome());
     }
 
 }
