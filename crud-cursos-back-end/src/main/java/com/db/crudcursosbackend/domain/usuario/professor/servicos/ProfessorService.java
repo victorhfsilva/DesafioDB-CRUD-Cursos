@@ -31,4 +31,16 @@ public class ProfessorService implements IProfessorService {
        return excluirProfessorService.excluir(cpf);
     }
 
+    @Override
+    public Professor ativar(String cpf, Pessoa editor) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'ativar'");
+    }
+
+    @Override
+    public Professor desativar(String cpf, Pessoa editor) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'desativar'");
+    }
+
 }

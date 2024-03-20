@@ -9,6 +9,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import com.db.crudcursosbackend.domain.cursos.Curso;
 import com.db.crudcursosbackend.domain.cursos.repositorios.CursoRepository;
+import com.db.crudcursosbackend.domain.usuario.professor.Professor;
+import com.db.crudcursosbackend.domain.usuario.professor.repositorios.ProfessorRepository;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -20,6 +22,9 @@ public class AtualizarProfessorCursoServiceTI {
     @Autowired
     private CursoRepository cursoRepository;
 
+    @Autowired
+    private ProfessorRepository professorRepository;
+
 
     @Test
     @SqlGroup({
@@ -28,8 +33,10 @@ public class AtualizarProfessorCursoServiceTI {
     })
     void dadoUmCursoValidoSalvaNoBancoDeDados_QuandoCursoEhAtualizado_DeveRetornarCursoCorretoPorId(){
         cursoRepository.findById(1L).orElseThrow();
+        
+        Professor editor = professorRepository.findByCpf("11111111111").orElseThrow();
 
-        Curso cursoAtualizado = atualizarProfessorCursoService.atualizar(1L, "44444444444", null);
+        Curso cursoAtualizado = atualizarProfessorCursoService.atualizar(1L, "44444444444", editor);
 
         assertEquals("44444444444", cursoAtualizado.getProfessor().getCpf());
         assertEquals("Dois", cursoAtualizado.getProfessor().getSobrenome());

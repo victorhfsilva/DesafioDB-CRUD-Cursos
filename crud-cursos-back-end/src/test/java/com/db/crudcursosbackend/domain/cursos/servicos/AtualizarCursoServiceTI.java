@@ -10,6 +10,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import com.db.crudcursosbackend.domain.cursos.Curso;
 import com.db.crudcursosbackend.domain.cursos.CursoBuilder;
+import com.db.crudcursosbackend.domain.usuario.professor.Professor;
+import com.db.crudcursosbackend.domain.usuario.professor.repositorios.ProfessorRepository;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -17,6 +19,9 @@ public class AtualizarCursoServiceTI {
     
     @Autowired
     private AtualizarCursoService atualizarCursoService;
+
+    @Autowired
+    private ProfessorRepository professorRepository;
 
     private CursoBuilder cursoBuilder;
 
@@ -36,8 +41,9 @@ public class AtualizarCursoServiceTI {
                                         .cargaHoraria(300)
                                         .nome("Português")
                                         .build();
+        Professor editor = professorRepository.findByCpf("11111111111").orElseThrow();
 
-        Curso cursoAtualizado = atualizarCursoService.atualizar(1L, novoCurso, null);
+        Curso cursoAtualizado = atualizarCursoService.atualizar(1L, novoCurso, editor);
 
         assertEquals(novoCurso.getNome(), cursoAtualizado.getNome());
         assertEquals(novoCurso.getDescricao(), cursoAtualizado.getDescricao());

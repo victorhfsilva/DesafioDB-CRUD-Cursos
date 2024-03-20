@@ -9,6 +9,7 @@ import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import com.db.crudcursosbackend.domain.usuario.professor.Professor;
 import com.db.crudcursosbackend.domain.usuario.professor.repositorios.ProfessorRepository;
 import com.db.crudcursosbackend.infra.excecoes.EntidadeDesativada;
+import com.db.crudcursosbackend.infra.validacoes.ValidacaoEditorUtil;
 
 import lombok.AllArgsConstructor;
 
@@ -21,11 +22,7 @@ public class RegistrarCursoService implements IRegistrarCursoService {
 
     @Override
     public Curso registrar(Curso curso, String cpfProfessor, Pessoa editor) {
-        if (editor != null){
-            curso.setAtivo(true);
-            curso.setCriadoAs(LocalDateTime.now());
-            curso.setCriadoPor(editor.getContato().getEmail());
-        }
+        ValidacaoEditorUtil.validarRegistro(curso, editor);
        
         Professor professorSalvo = professorRepository.findByCpf(cpfProfessor).orElseThrow();
         
@@ -35,5 +32,7 @@ public class RegistrarCursoService implements IRegistrarCursoService {
         }
         throw new EntidadeDesativada("O professor com cpf " + cpfProfessor + " foi desativada.");
     }
+
+
 
 }

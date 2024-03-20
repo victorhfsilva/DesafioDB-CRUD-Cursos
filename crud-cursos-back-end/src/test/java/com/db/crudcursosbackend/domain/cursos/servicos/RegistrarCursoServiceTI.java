@@ -10,6 +10,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import com.db.crudcursosbackend.domain.cursos.Curso;
 import com.db.crudcursosbackend.domain.cursos.CursoBuilder;
+import com.db.crudcursosbackend.domain.usuario.professor.Professor;
+import com.db.crudcursosbackend.domain.usuario.professor.repositorios.ProfessorRepository;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -17,6 +19,9 @@ public class RegistrarCursoServiceTI {
     
     @Autowired
     private RegistrarCursoService registrarCursoService;
+
+    @Autowired
+    private ProfessorRepository professorRepository;
 
     private CursoBuilder cursoBuilder;
 
@@ -37,7 +42,9 @@ public class RegistrarCursoServiceTI {
                                     .nome("Matemática")
                                     .build();
 
-        Curso cursoSalvo = registrarCursoService.registrar(curso, "11111111111", null);
+        Professor editor = professorRepository.findByCpf("11111111111").orElseThrow();
+
+        Curso cursoSalvo = registrarCursoService.registrar(curso, "11111111111", editor);
 
         assertEquals(curso.getNome(), cursoSalvo.getNome());
         assertEquals(curso.getProfessor().getCpf(), cursoSalvo.getProfessor().getCpf());

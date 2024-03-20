@@ -7,6 +7,8 @@ import com.db.crudcursosbackend.domain.cursos.interfaces.IAtualizarCursoService;
 import com.db.crudcursosbackend.domain.cursos.repositorios.CursoRepository;
 import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import com.db.crudcursosbackend.domain.usuario.professor.Professor;
+import com.db.crudcursosbackend.infra.excecoes.EditorInvalido;
+import com.db.crudcursosbackend.infra.validacoes.ValidacaoEditorUtil;
 
 import lombok.AllArgsConstructor;
 
@@ -24,17 +26,10 @@ public class AtualizarCursoService implements IAtualizarCursoService {
         cursoSalvo.setCargaHoraria(novocurso.getCargaHoraria());
         cursoSalvo.setDescricao(novocurso.getDescricao());
         cursoSalvo.setNome(novocurso.getNome());
-        atualizarProfessor(cursoSalvo, novocurso);
 
-        if (editor != null){
-            cursoSalvo.setAtualizadoAs(LocalDateTime.now());
-            cursoSalvo.setAtualizadoPor(editor.getContato().getEmail());
-        }
+        ValidacaoEditorUtil.validarAtualizacao(editor, cursoSalvo);
 
         return cursoRepository.save(cursoSalvo);
     }
     
-    private void atualizarProfessor(Curso cursoSalvo, Curso novoCurso) {
-
-    }
 }
