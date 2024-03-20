@@ -2,11 +2,7 @@ package com.db.crudcursosbackend.domain.usuario.aluno.servicos;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
-import com.db.crudcursosbackend.domain.cursos.Curso;
-import com.db.crudcursosbackend.domain.cursos.repositorios.CursoRepository;
 import com.db.crudcursosbackend.domain.usuario.contato.Contato;
 import com.db.crudcursosbackend.domain.usuario.contato.repositorios.ContatoRepository;
 import com.db.crudcursosbackend.domain.usuario.endereco.Endereco;
@@ -15,7 +11,6 @@ import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import com.db.crudcursosbackend.domain.usuario.aluno.Aluno;
 import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IRegistrarAlunoService;
 import com.db.crudcursosbackend.domain.usuario.aluno.repositorios.AlunoRepository;
-
 import lombok.AllArgsConstructor;
 
 @Service
@@ -37,8 +32,7 @@ public class RegistrarAlunoService implements IRegistrarAlunoService {
         Contato contato = aluno.getContato();
         contatoRepository.save(contato);
 
-        List<Endereco> enderecos = aluno.getEnderecos();
-        List<Curso> cursos = aluno.getCursos();    
+        List<Endereco> enderecos = aluno.getEnderecos();  
 
         Aluno alunoSalvo = alunoRepository.save(aluno);
     
