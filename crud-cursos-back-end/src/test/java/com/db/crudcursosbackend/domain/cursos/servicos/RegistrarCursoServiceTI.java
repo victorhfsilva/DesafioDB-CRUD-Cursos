@@ -30,7 +30,7 @@ public class RegistrarCursoServiceTI {
         @Sql(scripts =  "/db/limpar.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
         @Sql(scripts = "/db/dados-sem-cursos.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     })
-    void dadaUmAlunoValido_QuandoRegistrado_DeveRetornarAlunoCorreto() {
+    void dadaUmCursoValido_QuandoRegistrado_DeveRetornarCursoCorreto() {
 
         Curso curso = cursoBuilder.descricao("Matemática para todos.")
                                     .cargaHoraria(300)
