@@ -32,12 +32,14 @@ public class AtualizarProfessorService implements IAtualizarProfessorService {
         professorSalvo.setPapel(novoProfessor.getPapel());
         professorSalvo.setDataDeNascimento(novoProfessor.getDataDeNascimento());
         professorSalvo.setSalario(novoProfessor.getSalario());
-        professorSalvo.setAtualizadoAs(LocalDateTime.now());
-        professorSalvo.setAtualizadoPor(editor.getContato().getEmail());
+        
+        if (editor != null){
+            professorSalvo.setAtualizadoAs(LocalDateTime.now());
+            professorSalvo.setAtualizadoPor(editor.getContato().getEmail());
+        }
 
         atualizarContato(professorSalvo,novoProfessor);
         return professorRepository.save(professorSalvo); 
-
     }
 
     private void atualizarContato(Pessoa pessoaSalva, Pessoa novaPessoa) {

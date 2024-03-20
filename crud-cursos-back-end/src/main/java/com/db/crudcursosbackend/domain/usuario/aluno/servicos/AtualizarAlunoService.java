@@ -31,8 +31,10 @@ public class AtualizarAlunoService implements IAtualizarAlunoService {
         alunoSalvo.setMatricula(novoAluno.getMatricula());
         alunoSalvo.setDataDeIngresso(novoAluno.getDataDeIngresso());
 
-        alunoSalvo.setAtualizadoAs(LocalDateTime.now());
-        alunoSalvo.setAtualizadoPor(editor.getContato().getEmail());
+        if (editor != null){
+            alunoSalvo.setAtualizadoAs(LocalDateTime.now());
+            alunoSalvo.setAtualizadoPor(editor.getContato().getEmail());
+        }
 
         atualizarContato(alunoSalvo,novoAluno);
         return alunoRepository.save(alunoSalvo); 

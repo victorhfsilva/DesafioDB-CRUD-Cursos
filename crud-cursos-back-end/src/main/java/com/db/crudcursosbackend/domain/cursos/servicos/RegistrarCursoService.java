@@ -8,6 +8,8 @@ import com.db.crudcursosbackend.domain.cursos.repositorios.CursoRepository;
 import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import com.db.crudcursosbackend.domain.usuario.professor.Professor;
 import com.db.crudcursosbackend.domain.usuario.professor.repositorios.ProfessorRepository;
+import com.db.crudcursosbackend.infra.excecoes.EntidadeDesativada;
+
 import lombok.AllArgsConstructor;
 
 @Service
@@ -26,10 +28,12 @@ public class RegistrarCursoService implements IRegistrarCursoService {
         }
        
         Professor professorSalvo = professorRepository.findByCpf(cpfProfessor).orElseThrow();
-        curso.setProfessor(professorSalvo);
-
-        return cursoRepository.save(curso);
+        
+        if (professorSalvo.isAtivo()){
+            curso.setProfessor(professorSalvo);
+            return cursoRepository.save(curso);
+        }
+        throw new EntidadeDesativada("O professor com cpf " + cpfProfessor + " foi desativada.");
     }
-
 
 }
