@@ -8,6 +8,7 @@ import com.db.crudcursosbackend.domain.usuario.contato.repositorios.ContatoRepos
 import com.db.crudcursosbackend.domain.usuario.endereco.Endereco;
 import com.db.crudcursosbackend.domain.usuario.endereco.repositorios.EnderecoRepository;
 import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
+import com.db.crudcursosbackend.infra.excecoes.ContatoNulo;
 import com.db.crudcursosbackend.infra.validacoes.ValidacaoEditorUtil;
 import com.db.crudcursosbackend.domain.usuario.aluno.Aluno;
 import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IRegistrarAlunoService;
@@ -25,22 +26,33 @@ public class RegistrarAlunoService implements IRegistrarAlunoService {
     @Override
     public Aluno registrar(Aluno aluno, Pessoa editor) {
         ValidacaoEditorUtil.validarRegistro(aluno, editor);
-
+        
         Contato contato = aluno.getContato();
-        contatoRepository.save(contato);
+        salvarContato(contato);
 
         List<Endereco> enderecos = aluno.getEnderecos();  
-
         Aluno alunoSalvo = alunoRepository.save(aluno);
     
+        salvarEnderecos(enderecos, alunoSalvo);
+
+        return alunoRepository.findById(alunoSalvo.getId()).orElseThrow();
+    }
+
+    private void salvarEnderecos(List<Endereco> enderecos, Aluno alunoSalvo) {
         if(enderecos != null) {
             enderecos.stream().forEach(endereco -> {
                 endereco.setPessoa(alunoSalvo);
                 enderecoRepository.save(endereco);
             });
         }
+    }
 
-        return alunoRepository.findById(alunoSalvo.getId()).orElseThrow();
+    private void salvarContato(Contato contato) {
+        if (contato != null) {
+            contatoRepository.save(contato);
+        } else {
+            throw new ContatoNulo();
+        }
     }
     
 }

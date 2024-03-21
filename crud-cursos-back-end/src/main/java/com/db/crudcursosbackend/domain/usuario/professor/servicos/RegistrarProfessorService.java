@@ -13,6 +13,7 @@ import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import com.db.crudcursosbackend.domain.usuario.professor.Professor;
 import com.db.crudcursosbackend.domain.usuario.professor.interfaces.IRegistrarProfessorService;
 import com.db.crudcursosbackend.domain.usuario.professor.repositorios.ProfessorRepository;
+import com.db.crudcursosbackend.infra.excecoes.ContatoNulo;
 import com.db.crudcursosbackend.infra.validacoes.ValidacaoEditorUtil;
 
 import lombok.AllArgsConstructor;
@@ -31,28 +32,42 @@ public class RegistrarProfessorService implements IRegistrarProfessorService {
         ValidacaoEditorUtil.validarRegistro(professor, editor);
 
         Contato contato = professor.getContato();
-        contatoRepository.save(contato);
+        salvarContato(contato);
 
         List<Endereco> enderecos = professor.getEnderecos();
         List<Curso> cursos = professor.getCursos();    
 
         Professor professorSalvo = professorRepository.save(professor);
-    
+        salvarEnderecos(enderecos, professorSalvo);
+        salvarCursos(cursos, professorSalvo);
+
+        return professorRepository.findById(professorSalvo.getId()).orElseThrow();
+    }
+
+    private void salvarCursos(List<Curso> cursos, Professor professorSalvo) {
+        if(cursos != null){
+            cursos.stream().forEach(curso -> {
+                curso.setProfessor(professorSalvo);
+                cursoRepository.save(curso);
+            });
+        }
+    }
+
+    private void salvarEnderecos(List<Endereco> enderecos, Professor professorSalvo) {
         if(enderecos != null) {
             enderecos.stream().forEach(endereco -> {
                 endereco.setPessoa(professorSalvo);
                 enderecoRepository.save(endereco);
             });
         }
+    }
 
-        if(cursos != null){
-            cursos.stream().forEach(curso -> {
-                curso.setProfessor(professor);
-                cursoRepository.save(curso);
-            });
+    private void salvarContato(Contato contato) {
+        if (contato != null) {
+            contatoRepository.save(contato);
+        } else {
+            throw new ContatoNulo();
         }
-
-        return professorRepository.findById(professorSalvo.getId()).orElseThrow();
     }
     
 }
