@@ -1,6 +1,5 @@
 package com.db.crudcursosbackend.domain.usuario.aluno.servicos;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import com.db.crudcursosbackend.domain.usuario.contato.Contato;

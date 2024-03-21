@@ -7,6 +7,7 @@ import com.db.crudcursosbackend.domain.usuario.aluno.Aluno;
 import com.db.crudcursosbackend.domain.usuario.professor.Professor;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -41,7 +42,7 @@ public class Curso extends EntidadeBaseAudicao {
     @JoinColumn(name = "professor_id")
     private Professor professor;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "cursos_alunos",
         joinColumns = @JoinColumn(name = "curso_id"),

@@ -29,12 +29,11 @@ public class AdicionarAlunoService implements IAdicionarAlunoService {
                 List<Aluno> alunos = curso.getAlunos();
                 alunos.add(aluno);
                 curso.setAlunos(alunos);
-            } else {
-                throw new EntidadeDesativada("Este curso foi desativado.");
+                return cursoRepository.save(curso);
             }
-            throw new EntidadeDesativada("O aluno com cpf " + cpf + " foi desativada.");  
+            throw new EntidadeDesativada("Este curso foi desativado.");
         } 
-
-        return cursoRepository.save(curso);
+        throw new EntidadeDesativada("O aluno com cpf " + cpf + " foi desativada.");  
+  
     }
 }

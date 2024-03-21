@@ -8,10 +8,14 @@ import com.db.crudcursosbackend.domain.usuario.contato.Contato;
 import com.db.crudcursosbackend.domain.usuario.endereco.Endereco;
 import com.db.crudcursosbackend.domain.usuario.papel.Papel;
 import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -34,7 +38,7 @@ public class Aluno extends Pessoa {
     @Column(name = "data_ingresso", nullable = false)
     private LocalDate dataDeIngresso;
 
-    @ManyToMany(mappedBy = "alunos")
+    @ManyToMany(mappedBy = "alunos", cascade = CascadeType.REMOVE)
     private List<Curso> cursos;
 
     public Aluno(

@@ -33,7 +33,7 @@ INSERT INTO enderecos (numero, complemento, rua, bairro, cidade, estado, cep, pe
 ('400', 'Casa', 'Rua D', 'Bairro 4', 'Cidade 4', 'BAHIA', '13545246', 4),
 ('500', 'Casa', 'Rua H', 'Bairro 5', 'Cidade 5', 'BAHIA', '13565246', 4);
 
-INSERT INTO alunos_cursos (aluno_id, curso_id) VALUES
+INSERT INTO cursos_alunos (aluno_id, curso_id) VALUES
 (2, 1), 
 (3, 1),
 (3, 2);
