@@ -10,4 +10,6 @@ public interface ICursoService {
     Curso excluir(Long cursoId);
     Curso adicionarAluno(Long cursoId, String cpf);
     Curso removerAluno(Long cursoId, String cpf);
+    Curso ativar(Long cursoId, Pessoa editor);
+    Curso desativar(Long cursoId, Pessoa editor);
 }

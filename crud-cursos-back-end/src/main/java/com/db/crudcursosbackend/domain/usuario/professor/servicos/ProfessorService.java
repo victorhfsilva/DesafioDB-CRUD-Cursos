@@ -1,8 +1,11 @@
 package com.db.crudcursosbackend.domain.usuario.professor.servicos;
 
 import org.springframework.stereotype.Service;
+
+import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IAtivacaoAlunoService;
 import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import com.db.crudcursosbackend.domain.usuario.professor.Professor;
+import com.db.crudcursosbackend.domain.usuario.professor.interfaces.IAtivacaoProfessorService;
 import com.db.crudcursosbackend.domain.usuario.professor.interfaces.IAtualizarProfessorService;
 import com.db.crudcursosbackend.domain.usuario.professor.interfaces.IExcluirProfessorService;
 import com.db.crudcursosbackend.domain.usuario.professor.interfaces.IProfessorService;
@@ -16,6 +19,7 @@ public class ProfessorService implements IProfessorService {
     private IRegistrarProfessorService registrarProfessorService;
     private IAtualizarProfessorService atualizarProfessorService;
     private IExcluirProfessorService excluirProfessorService;
+    private IAtivacaoProfessorService ativacaoProfessorService;
 
     public Professor registrar(Professor pessoa, Pessoa editor) {
        return registrarProfessorService.registrar(pessoa, editor);
@@ -33,14 +37,12 @@ public class ProfessorService implements IProfessorService {
 
     @Override
     public Professor ativar(String cpf, Pessoa editor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'ativar'");
+        return ativacaoProfessorService.ativar(cpf, editor);
     }
 
     @Override
     public Professor desativar(String cpf, Pessoa editor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'desativar'");
+        return ativacaoProfessorService.desativar(cpf, editor);
     }
 
 }

@@ -7,4 +7,6 @@ public interface IAlunoService {
     Aluno registrar(Aluno aluno, Pessoa editor);
     Aluno atualizar(String cpf, Aluno novoALuno, Pessoa editor);
     Aluno excluir(String cpf);
+    Aluno ativar(String cpf, Pessoa editor);
+    Aluno desativar(String cpf, Pessoa editor);
 }

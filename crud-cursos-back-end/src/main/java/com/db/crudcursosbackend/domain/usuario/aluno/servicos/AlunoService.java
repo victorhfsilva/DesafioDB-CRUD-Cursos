@@ -3,6 +3,7 @@ package com.db.crudcursosbackend.domain.usuario.aluno.servicos;
 import org.springframework.stereotype.Service;
 import com.db.crudcursosbackend.domain.usuario.aluno.Aluno;
 import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IAlunoService;
+import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IAtivacaoAlunoService;
 import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IAtualizarAlunoService;
 import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IExcluirAlunoService;
 import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IRegistrarAlunoService;
@@ -16,6 +17,7 @@ public class AlunoService implements IAlunoService {
     private IAtualizarAlunoService atualizarAlunoService;
     private IExcluirAlunoService excluirAlunoService;
     private IRegistrarAlunoService registrarAlunoService;
+    private IAtivacaoAlunoService ativacaoAlunoService;
 
     @Override
     public Aluno registrar(Aluno aluno, Pessoa editor) {
@@ -30,6 +32,16 @@ public class AlunoService implements IAlunoService {
     @Override
     public Aluno excluir(String cpf) {
         return excluirAlunoService.excluir(cpf);
+    }
+
+    @Override
+    public Aluno ativar(String cpf, Pessoa editor) {
+        return ativacaoAlunoService.ativar(cpf, editor);
+    }
+
+    @Override
+    public Aluno desativar(String cpf, Pessoa editor) {
+        return ativacaoAlunoService.desativar(cpf, editor);
     }
     
 }
