@@ -5,6 +5,7 @@ import com.db.crudcursosbackend.domain.cursos.Curso;
 import com.db.crudcursosbackend.domain.cursos.interfaces.IAtualizarCursoService;
 import com.db.crudcursosbackend.domain.cursos.repositorios.CursoRepository;
 import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
+import com.db.crudcursosbackend.infra.excecoes.EntidadeDesativada;
 import com.db.crudcursosbackend.infra.validacoes.ValidacaoEditorUtil;
 
 import lombok.AllArgsConstructor;
@@ -22,11 +23,14 @@ public class AtualizarCursoService implements IAtualizarCursoService {
         
         ValidacaoEditorUtil.validarAtualizacao(editor, cursoSalvo);
         
-        cursoSalvo.setCargaHoraria(novocurso.getCargaHoraria());
-        cursoSalvo.setDescricao(novocurso.getDescricao());
-        cursoSalvo.setNome(novocurso.getNome());
-
-        return cursoRepository.save(cursoSalvo);
+        if (cursoSalvo.isAtivo()) {
+            cursoSalvo.setCargaHoraria(novocurso.getCargaHoraria());
+            cursoSalvo.setDescricao(novocurso.getDescricao());
+            cursoSalvo.setNome(novocurso.getNome());
+            return cursoRepository.save(cursoSalvo);
+        } 
+        throw new EntidadeDesativada("Este curso foi desativado.");
+        
     }
     
 }

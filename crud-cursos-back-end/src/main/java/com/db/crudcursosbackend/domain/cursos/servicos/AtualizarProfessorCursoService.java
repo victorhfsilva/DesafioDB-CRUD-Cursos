@@ -33,10 +33,13 @@ public class AtualizarProfessorCursoService implements IAtualizarProfessorCursoS
         Professor novoProfessor = professorRepository.findByCpf(cpf).orElseThrow();
 
         if (novoProfessor.isAtivo()){
-            cursoSalvo.setProfessor(novoProfessor);  
-            return cursoRepository.save(cursoSalvo);
+            if(cursoSalvo.isAtivo()){
+                cursoSalvo.setProfessor(novoProfessor);  
+                return cursoRepository.save(cursoSalvo);
+            }
+            throw new EntidadeDesativada("Este curso foi desativado.");
         }
-        throw new EntidadeDesativada("O professor com cpf " + cpf + " foi desativada.");        
+        throw new EntidadeDesativada("O professor com cpf " + cpf + " foi desativado.");        
     }
 
 

@@ -10,6 +10,7 @@ import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import com.db.crudcursosbackend.domain.usuario.professor.Professor;
 import com.db.crudcursosbackend.domain.usuario.professor.interfaces.IAtualizarProfessorService;
 import com.db.crudcursosbackend.domain.usuario.professor.repositorios.ProfessorRepository;
+import com.db.crudcursosbackend.infra.excecoes.EntidadeDesativada;
 import com.db.crudcursosbackend.infra.validacoes.ValidacaoEditorUtil;
 
 import lombok.AllArgsConstructor;
@@ -28,22 +29,24 @@ public class AtualizarProfessorService implements IAtualizarProfessorService {
 
         ValidacaoEditorUtil.validarAtualizacao(editor, professorSalvo);
         
-        professorSalvo.setCpf(novoProfessor.getCpf());
-        professorSalvo.setNome(novoProfessor.getNome());
-        professorSalvo.setSobrenome(novoProfessor.getSobrenome());
-        professorSalvo.setSenha(novoProfessor.getSenha());
-        professorSalvo.setPapel(novoProfessor.getPapel());
-        professorSalvo.setDataDeNascimento(novoProfessor.getDataDeNascimento());
-        professorSalvo.setSalario(novoProfessor.getSalario());
-
-        atualizarContato(professorSalvo,novoProfessor);
-        return professorRepository.save(professorSalvo); 
+        if (professorSalvo.isAtivo()){
+            professorSalvo.setCpf(novoProfessor.getCpf());
+            professorSalvo.setNome(novoProfessor.getNome());
+            professorSalvo.setSobrenome(novoProfessor.getSobrenome());
+            professorSalvo.setSenha(novoProfessor.getSenha());
+            professorSalvo.setPapel(novoProfessor.getPapel());
+            professorSalvo.setDataDeNascimento(novoProfessor.getDataDeNascimento());
+            professorSalvo.setSalario(novoProfessor.getSalario());
+            atualizarContato(professorSalvo,novoProfessor);
+            return professorRepository.save(professorSalvo); 
+        }
+        throw new EntidadeDesativada("O professor com cpf " + cpf + " foi desativado.");
     }
 
     private void atualizarContato(Pessoa pessoaSalva, Pessoa novaPessoa) {
         Contato novoContato = novaPessoa.getContato();
         Contato contatoSalvo = pessoaSalva.getContato();
-        if (!contatoSalvo.equals(novoContato)){
+        if (novoContato != null && !contatoSalvo.equals(novoContato)){
             novoContato.setId(contatoSalvo.getId());
             pessoaSalva.setContato(novaPessoa.getContato());  
             contatoRepository.save(pessoaSalva.getContato());

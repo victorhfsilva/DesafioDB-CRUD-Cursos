@@ -37,7 +37,8 @@ public class AtualizarCursoServiceTI {
     })
     void dadoUmCursoValidoSalvaNoBancoDeDados_QuandoCursoEhAtualizado_DeveRetornarCursoCorretoPorId(){
 
-        Curso novoCurso = cursoBuilder.descricao("Portugês Inclusivo")
+        Curso novoCurso = cursoBuilder.ativo(true)
+                                        .descricao("Portugês Inclusivo")
                                         .cargaHoraria(300)
                                         .nome("Português")
                                         .build();
