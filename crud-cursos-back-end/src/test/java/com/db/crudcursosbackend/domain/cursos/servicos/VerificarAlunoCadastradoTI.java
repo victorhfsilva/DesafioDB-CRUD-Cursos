@@ -14,7 +14,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 public class VerificarAlunoCadastradoTI {
     
     @Autowired
-    private VerificarAlunoCadastrado verificarAlunoCadastrado;
+    private VerificarAlunoCadastradoService verificarAlunoCadastrado;
 
     @Test
     @SqlGroup({

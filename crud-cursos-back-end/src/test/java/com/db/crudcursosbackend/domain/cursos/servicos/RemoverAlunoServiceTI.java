@@ -1,6 +1,7 @@
 package com.db.crudcursosbackend.domain.cursos.servicos;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,10 +11,10 @@ import org.springframework.test.context.jdbc.SqlGroup;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class AdicionarAlunoServiceTI {
+public class RemoverAlunoServiceTI {
     
     @Autowired
-    private AdicionarAlunoService adicionarAlunoService;
+    private RemoverAlunoService removerAlunoService;
 
     @Autowired
     private VerificarAlunoCadastradoService verificarAlunoCadastrado;
@@ -24,8 +25,8 @@ public class AdicionarAlunoServiceTI {
         @Sql(scripts = "/db/dados.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     })
     void dadaUmCursoValidoSalvoNoBancoDeDados_QuandoAlunoAdicionado_DeveRetornarAlunoAdicionado(){
-        adicionarAlunoService.adicionar(4L, "22222222222");
+        removerAlunoService.remover(1L, "22222222222");
         
-        assertTrue(verificarAlunoCadastrado.verficar("22222222222", 4L));
+        assertFalse(verificarAlunoCadastrado.verficar("22222222222", 1L));
     }
 }

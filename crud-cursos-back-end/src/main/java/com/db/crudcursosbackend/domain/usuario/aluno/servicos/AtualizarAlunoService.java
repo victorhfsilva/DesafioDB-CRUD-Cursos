@@ -8,13 +8,13 @@ import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import com.db.crudcursosbackend.infra.excecoes.EntidadeDesativada;
 import com.db.crudcursosbackend.infra.validacoes.ValidacaoEditorUtil;
 import com.db.crudcursosbackend.domain.usuario.aluno.Aluno;
-import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IAtualizarAlunoService;
+import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IAtualizarCursoService;
 import com.db.crudcursosbackend.domain.usuario.aluno.repositorios.AlunoRepository;
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class AtualizarAlunoService implements IAtualizarAlunoService {
+public class AtualizarAlunoService implements IAtualizarCursoService {
     
     private AlunoRepository alunoRepository;
     private ContatoRepository contatoRepository;

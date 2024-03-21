@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import com.db.crudcursosbackend.domain.usuario.aluno.Aluno;
 import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IAlunoService;
 import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IAtivacaoAlunoService;
-import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IAtualizarAlunoService;
+import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IAtualizarCursoService;
 import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IExcluirAlunoService;
 import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IRegistrarAlunoService;
 import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class AlunoService implements IAlunoService {
 
-    private IAtualizarAlunoService atualizarAlunoService;
+    private IAtualizarCursoService atualizarAlunoService;
     private IExcluirAlunoService excluirAlunoService;
     private IRegistrarAlunoService registrarAlunoService;
     private IAtivacaoAlunoService ativacaoAlunoService;
