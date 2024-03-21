@@ -28,9 +28,9 @@ public class AtualizarProfessorCursoService implements IAtualizarProfessorCursoS
         
         Curso cursoSalvo = cursoRepository.findById(id).orElseThrow();
         
-        Professor novoProfessor = professorRepository.findByCpf(cpf).orElseThrow();
-        
         ValidacaoEditorUtil.validarAtualizacao(editor, cursoSalvo);
+
+        Professor novoProfessor = professorRepository.findByCpf(cpf).orElseThrow();
 
         if (novoProfessor.isAtivo()){
             cursoSalvo.setProfessor(novoProfessor);  

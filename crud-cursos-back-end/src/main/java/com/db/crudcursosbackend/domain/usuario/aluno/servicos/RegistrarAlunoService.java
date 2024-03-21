@@ -8,6 +8,7 @@ import com.db.crudcursosbackend.domain.usuario.contato.repositorios.ContatoRepos
 import com.db.crudcursosbackend.domain.usuario.endereco.Endereco;
 import com.db.crudcursosbackend.domain.usuario.endereco.repositorios.EnderecoRepository;
 import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
+import com.db.crudcursosbackend.infra.validacoes.ValidacaoEditorUtil;
 import com.db.crudcursosbackend.domain.usuario.aluno.Aluno;
 import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IRegistrarAlunoService;
 import com.db.crudcursosbackend.domain.usuario.aluno.repositorios.AlunoRepository;
@@ -23,11 +24,7 @@ public class RegistrarAlunoService implements IRegistrarAlunoService {
 
     @Override
     public Aluno registrar(Aluno aluno, Pessoa editor) {
-        if (editor != null){
-            aluno.setAtivo(true);
-            aluno.setCriadoAs(LocalDateTime.now());
-            aluno.setCriadoPor(editor.getContato().getEmail());
-        }
+        ValidacaoEditorUtil.validarRegistro(aluno, editor);
 
         Contato contato = aluno.getContato();
         contatoRepository.save(contato);

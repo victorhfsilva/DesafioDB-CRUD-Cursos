@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.db.crudcursosbackend.domain.usuario.contato.Contato;
 import com.db.crudcursosbackend.domain.usuario.contato.repositorios.ContatoRepository;
 import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
+import com.db.crudcursosbackend.infra.validacoes.ValidacaoEditorUtil;
 import com.db.crudcursosbackend.domain.usuario.aluno.Aluno;
 import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IAtualizarAlunoService;
 import com.db.crudcursosbackend.domain.usuario.aluno.repositorios.AlunoRepository;
@@ -22,6 +23,8 @@ public class AtualizarAlunoService implements IAtualizarAlunoService {
         
         Aluno alunoSalvo = alunoRepository.findByCpf(cpf).orElseThrow();
 
+        ValidacaoEditorUtil.validarAtualizacao(editor, alunoSalvo);
+
         alunoSalvo.setCpf(novoAluno.getCpf());
         alunoSalvo.setNome(novoAluno.getNome());
         alunoSalvo.setSobrenome(novoAluno.getSobrenome());
@@ -31,12 +34,7 @@ public class AtualizarAlunoService implements IAtualizarAlunoService {
         alunoSalvo.setMatricula(novoAluno.getMatricula());
         alunoSalvo.setDataDeIngresso(novoAluno.getDataDeIngresso());
 
-        if (editor != null){
-            alunoSalvo.setAtualizadoAs(LocalDateTime.now());
-            alunoSalvo.setAtualizadoPor(editor.getContato().getEmail());
-        }
-
-        atualizarContato(alunoSalvo,novoAluno);
+        atualizarContato(alunoSalvo, novoAluno);
         return alunoRepository.save(alunoSalvo); 
 
     }

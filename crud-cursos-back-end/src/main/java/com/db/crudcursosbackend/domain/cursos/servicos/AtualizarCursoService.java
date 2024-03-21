@@ -1,13 +1,10 @@
 package com.db.crudcursosbackend.domain.cursos.servicos;
 
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
 import com.db.crudcursosbackend.domain.cursos.Curso;
 import com.db.crudcursosbackend.domain.cursos.interfaces.IAtualizarCursoService;
 import com.db.crudcursosbackend.domain.cursos.repositorios.CursoRepository;
 import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
-import com.db.crudcursosbackend.domain.usuario.professor.Professor;
-import com.db.crudcursosbackend.infra.excecoes.EditorInvalido;
 import com.db.crudcursosbackend.infra.validacoes.ValidacaoEditorUtil;
 
 import lombok.AllArgsConstructor;
@@ -23,11 +20,11 @@ public class AtualizarCursoService implements IAtualizarCursoService {
         
         Curso cursoSalvo = cursoRepository.findById(id).orElseThrow();
         
+        ValidacaoEditorUtil.validarAtualizacao(editor, cursoSalvo);
+        
         cursoSalvo.setCargaHoraria(novocurso.getCargaHoraria());
         cursoSalvo.setDescricao(novocurso.getDescricao());
         cursoSalvo.setNome(novocurso.getNome());
-
-        ValidacaoEditorUtil.validarAtualizacao(editor, cursoSalvo);
 
         return cursoRepository.save(cursoSalvo);
     }

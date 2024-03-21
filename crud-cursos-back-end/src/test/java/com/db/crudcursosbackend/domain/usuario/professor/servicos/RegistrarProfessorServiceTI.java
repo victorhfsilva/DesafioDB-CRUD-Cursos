@@ -82,7 +82,8 @@ public class RegistrarProfessorServiceTI {
 
         List<Curso> cursos = List.of(curso1, curso2);
 
-        Professor professor = professorBuilder.nome("João")
+        Professor professor = professorBuilder.ativo(true)
+                        .nome("João")
                         .sobrenome("da Silva")
                         .cpf("223.356.7389-00")
                         .senha("senha123")

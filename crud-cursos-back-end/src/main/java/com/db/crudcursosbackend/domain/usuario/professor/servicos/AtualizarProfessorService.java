@@ -10,6 +10,7 @@ import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import com.db.crudcursosbackend.domain.usuario.professor.Professor;
 import com.db.crudcursosbackend.domain.usuario.professor.interfaces.IAtualizarProfessorService;
 import com.db.crudcursosbackend.domain.usuario.professor.repositorios.ProfessorRepository;
+import com.db.crudcursosbackend.infra.validacoes.ValidacaoEditorUtil;
 
 import lombok.AllArgsConstructor;
 
@@ -25,6 +26,8 @@ public class AtualizarProfessorService implements IAtualizarProfessorService {
         
         Professor professorSalvo = professorRepository.findByCpf(cpf).orElseThrow();
 
+        ValidacaoEditorUtil.validarAtualizacao(editor, professorSalvo);
+        
         professorSalvo.setCpf(novoProfessor.getCpf());
         professorSalvo.setNome(novoProfessor.getNome());
         professorSalvo.setSobrenome(novoProfessor.getSobrenome());
@@ -32,11 +35,6 @@ public class AtualizarProfessorService implements IAtualizarProfessorService {
         professorSalvo.setPapel(novoProfessor.getPapel());
         professorSalvo.setDataDeNascimento(novoProfessor.getDataDeNascimento());
         professorSalvo.setSalario(novoProfessor.getSalario());
-        
-        if (editor != null){
-            professorSalvo.setAtualizadoAs(LocalDateTime.now());
-            professorSalvo.setAtualizadoPor(editor.getContato().getEmail());
-        }
 
         atualizarContato(professorSalvo,novoProfessor);
         return professorRepository.save(professorSalvo); 

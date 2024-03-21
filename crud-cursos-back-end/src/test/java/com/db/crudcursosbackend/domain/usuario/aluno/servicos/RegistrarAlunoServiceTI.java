@@ -66,7 +66,8 @@ public class RegistrarAlunoServiceTI {
 
         List<Endereco> enderecos = List.of(endereco1, endereco2);
 
-        Aluno aluno = alunoBuilder.nome("João")
+        Aluno aluno = alunoBuilder.ativo(true)
+                        .nome("João")
                         .sobrenome("da Silva")
                         .cpf("223.356.7389-00")
                         .senha("senha123")

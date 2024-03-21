@@ -13,6 +13,8 @@ import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import com.db.crudcursosbackend.domain.usuario.professor.Professor;
 import com.db.crudcursosbackend.domain.usuario.professor.interfaces.IRegistrarProfessorService;
 import com.db.crudcursosbackend.domain.usuario.professor.repositorios.ProfessorRepository;
+import com.db.crudcursosbackend.infra.validacoes.ValidacaoEditorUtil;
+
 import lombok.AllArgsConstructor;
 
 @Service
@@ -26,11 +28,7 @@ public class RegistrarProfessorService implements IRegistrarProfessorService {
 
     @Override
     public Professor registrar(Professor professor, Pessoa editor) {
-        if (editor != null){
-            professor.setAtivo(true);
-            professor.setCriadoAs(LocalDateTime.now());
-            professor.setCriadoPor(editor.getContato().getEmail());
-        }
+        ValidacaoEditorUtil.validarRegistro(professor, editor);
 
         Contato contato = professor.getContato();
         contatoRepository.save(contato);

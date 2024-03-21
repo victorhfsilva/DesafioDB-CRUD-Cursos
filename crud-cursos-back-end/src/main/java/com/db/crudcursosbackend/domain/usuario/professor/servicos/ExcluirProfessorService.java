@@ -1,7 +1,6 @@
 package com.db.crudcursosbackend.domain.usuario.professor.servicos;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
 import com.db.crudcursosbackend.domain.cursos.Curso;
 import com.db.crudcursosbackend.domain.cursos.repositorios.CursoRepository;
