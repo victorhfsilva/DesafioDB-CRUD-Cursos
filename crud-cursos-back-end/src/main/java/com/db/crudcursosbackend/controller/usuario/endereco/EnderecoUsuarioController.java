@@ -8,8 +8,6 @@ import com.db.crudcursosbackend.domain.usuario.endereco.interfaces.IEnderecoServ
 import com.db.crudcursosbackend.domain.usuario.endereco.utils.EnderecoUtils;
 import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import com.db.crudcursosbackend.domain.usuario.pessoa.interfaces.IPessoaService;
-import com.db.crudcursosbackend.infra.seguranca.interfaces.ITokenService;
-import com.db.crudcursosbackend.infra.seguranca.utils.TokenUtils;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;

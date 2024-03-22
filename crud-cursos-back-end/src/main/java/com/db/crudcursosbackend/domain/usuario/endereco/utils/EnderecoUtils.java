@@ -6,8 +6,6 @@ import com.db.crudcursosbackend.domain.usuario.endereco.interfaces.IEnderecoServ
 import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import com.db.crudcursosbackend.domain.usuario.pessoa.interfaces.IPessoaService;
 import com.db.crudcursosbackend.infra.excecoes.ErroDeAutenticacao;
-import com.db.crudcursosbackend.infra.seguranca.interfaces.ITokenService;
-import com.db.crudcursosbackend.infra.seguranca.utils.TokenUtils;
 import java.util.List;
 import lombok.AllArgsConstructor;
 
