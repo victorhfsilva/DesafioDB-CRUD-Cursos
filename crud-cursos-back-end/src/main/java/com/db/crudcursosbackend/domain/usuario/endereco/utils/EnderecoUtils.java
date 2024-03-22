@@ -15,14 +15,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class EnderecoUtils {
     
-    private TokenUtils tokenUtils;
-    private ITokenService tokenService;
     private IPessoaService pessoaService;
     private IEnderecoService enderecoService;
 
-    public Pessoa validarPermissaoDeAlterarEndereco(String headerAutorizacao, long id) {
-        String token = tokenUtils.validarToken(headerAutorizacao);
-        String cpf = tokenService.obterSujeito(token);
+    public Pessoa validarPermissaoDeAlterarEndereco(String cpf, long id) {
         Pessoa pessoa = pessoaService.buscarPorCpf(cpf);
         Endereco endereco = enderecoService.buscarEnderecoPorId(id);
         List<Endereco> enderecos = pessoa.getEnderecos();

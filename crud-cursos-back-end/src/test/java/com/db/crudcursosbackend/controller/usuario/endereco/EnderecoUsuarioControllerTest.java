@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -27,8 +28,6 @@ import com.db.crudcursosbackend.domain.usuario.estado.Estado;
 import com.db.crudcursosbackend.domain.usuario.pessoa.servicos.PessoaService;
 import com.db.crudcursosbackend.domain.usuario.professor.Professor;
 import com.db.crudcursosbackend.domain.usuario.professor.ProfessorBuilder;
-import com.db.crudcursosbackend.infra.seguranca.servicos.TokenService;
-import com.db.crudcursosbackend.infra.seguranca.utils.TokenUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -42,12 +41,6 @@ class EnderecoUsuarioControllerTest {
 
     @InjectMocks
     private EnderecoUsuarioController enderecoUsuarioController;
-
-    @MockBean
-    private TokenUtils tokenUtils;
-
-    @MockBean
-    private TokenService tokenService;
 
     @MockBean
     private PessoaService pessoaService;
@@ -67,6 +60,7 @@ class EnderecoUsuarioControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "73565638435", authorities = {"USUARIO"})
     void dadoUmUsuarioSalvo_quandoAdicionadoUmEndereco_deveRetornarEndereco() throws Exception{
        
         ProfessorBuilder professorBuilder = new ProfessorBuilder();
@@ -85,8 +79,6 @@ class EnderecoUsuarioControllerTest {
                                         .enderecos(List.of())
                                         .build();
 
-        when(tokenUtils.validarToken("Bearer tokenValido")).thenReturn("tokenValido");
-        when(tokenService.obterSujeito("tokenValido")).thenReturn("73565638435");
         when(pessoaService.buscarPorCpf("73565638435")).thenReturn(professor);
     
         EnderecoDTO enderecoDTO = EnderecoDTO.builder().numero("126")
@@ -114,6 +106,7 @@ class EnderecoUsuarioControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "73565638435", authorities = {"USUARIO"})
     void dadoUmUsuarioSalvo_quandoDeletadoUmEndereco_deveRetornarEndereco() throws Exception{
        
         ProfessorBuilder professorBuilder = new ProfessorBuilder();
@@ -142,7 +135,7 @@ class EnderecoUsuarioControllerTest {
                                         .enderecos(List.of(endereco))
                                         .build();
 
-        when(enderecoUtils.validarPermissaoDeAlterarEndereco("Bearer tokenValido", 1L)).thenReturn(professor);
+        when(enderecoUtils.validarPermissaoDeAlterarEndereco("73565638435", 1L)).thenReturn(professor);
         when(pessoaService.atualizar(eq("73565638435"), any(), any())).thenReturn(professor);
 
         when(enderecoService.excluir(1L)).thenReturn(endereco);
@@ -155,6 +148,7 @@ class EnderecoUsuarioControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "73565638435", authorities = {"USUARIO"})
     void dadoUmUsuarioSalvo_quandoAtualizaUmEndereco_deveRetornarEnderecoCorreto() throws Exception{
        
         ProfessorBuilder pessoaBuilder = new ProfessorBuilder();
@@ -183,7 +177,7 @@ class EnderecoUsuarioControllerTest {
                                         .enderecos(List.of(endereco))
                                         .build();
 
-        when(enderecoUtils.validarPermissaoDeAlterarEndereco("Bearer tokenValido", 1L)).thenReturn(professor);
+        when(enderecoUtils.validarPermissaoDeAlterarEndereco("73565638435", 1L)).thenReturn(professor);
         when(pessoaService.atualizar(eq(professor.getCpf()),any(),any())).thenReturn(professor);
 
         EnderecoDTO enderecoDTO = EnderecoDTO.builder().numero("128")
