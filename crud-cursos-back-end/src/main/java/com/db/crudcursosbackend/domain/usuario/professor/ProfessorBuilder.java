@@ -47,7 +47,7 @@ public class ProfessorBuilder extends PessoaBuilder<ProfessorBuilder> implements
     }
 
     @Override
-    public IProfessorBuilder reset() {
+    public ProfessorBuilder reset() {
         return new ProfessorBuilder();
     }
 
