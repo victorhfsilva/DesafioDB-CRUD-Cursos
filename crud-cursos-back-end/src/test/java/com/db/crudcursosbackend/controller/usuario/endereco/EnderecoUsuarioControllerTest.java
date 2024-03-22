@@ -24,8 +24,6 @@ import com.db.crudcursosbackend.domain.usuario.endereco.dtos.EnderecoDTO;
 import com.db.crudcursosbackend.domain.usuario.endereco.servicos.EnderecoService;
 import com.db.crudcursosbackend.domain.usuario.endereco.utils.EnderecoUtils;
 import com.db.crudcursosbackend.domain.usuario.estado.Estado;
-import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
-import com.db.crudcursosbackend.domain.usuario.pessoa.PessoaBuilder;
 import com.db.crudcursosbackend.domain.usuario.pessoa.servicos.PessoaService;
 import com.db.crudcursosbackend.domain.usuario.professor.Professor;
 import com.db.crudcursosbackend.domain.usuario.professor.ProfessorBuilder;

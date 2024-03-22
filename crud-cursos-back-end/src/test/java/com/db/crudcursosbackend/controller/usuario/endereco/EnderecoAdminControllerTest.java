@@ -96,8 +96,6 @@ public class EnderecoAdminControllerTest {
                                         .contato(contatoEditor)
                                         .build();
 
-        when(tokenUtils.validarToken("Bearer tokenValido")).thenReturn("tokenValido");
-        when(tokenService.obterSujeito("tokenValido")).thenReturn("admin");
         when(pessoaService.buscarPorCpf("admin")).thenReturn(editor);
         when(pessoaService.buscarPorCpf("73565638435")).thenReturn(professor);
         when(pessoaService.atualizar(eq("73565638435"), any(), any())).thenReturn(professor);
@@ -169,8 +167,6 @@ public class EnderecoAdminControllerTest {
                                         .contato(contatoEditor)
                                         .build();
 
-        when(tokenUtils.validarToken("Bearer tokenValido")).thenReturn("tokenValido");
-        when(tokenService.obterSujeito("tokenValido")).thenReturn("admin");
         when(pessoaService.buscarPorCpf("admin")).thenReturn(editor);
         
         when(enderecoService.buscarEnderecoPorId(1L)).thenReturn(endereco);
@@ -227,8 +223,6 @@ public class EnderecoAdminControllerTest {
                                         .contato(contatoEditor)
                                         .build();
 
-        when(tokenUtils.validarToken("Bearer tokenValido")).thenReturn("tokenValido");
-        when(tokenService.obterSujeito("tokenValido")).thenReturn("admin");
         when(pessoaService.buscarPorCpf("admin")).thenReturn(editor);
 
         when(enderecoService.buscarEnderecoPorId(1L)).thenReturn(endereco);

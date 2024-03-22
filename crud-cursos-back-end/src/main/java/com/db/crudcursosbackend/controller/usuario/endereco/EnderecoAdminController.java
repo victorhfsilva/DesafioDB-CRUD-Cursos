@@ -1,13 +1,15 @@
 package com.db.crudcursosbackend.controller.usuario.endereco;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.db.crudcursosbackend.domain.usuario.endereco.Endereco;
@@ -16,8 +18,6 @@ import com.db.crudcursosbackend.domain.usuario.endereco.dtos.EnderecoRespostaDTO
 import com.db.crudcursosbackend.domain.usuario.endereco.interfaces.IEnderecoService;
 import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import com.db.crudcursosbackend.domain.usuario.pessoa.interfaces.IPessoaService;
-import com.db.crudcursosbackend.infra.seguranca.interfaces.ITokenService;
-import com.db.crudcursosbackend.infra.seguranca.utils.TokenUtils;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -29,17 +29,14 @@ public class EnderecoAdminController {
     
     private IPessoaService pessoaService;
     private IEnderecoService enderecoService;
-    private ITokenService tokenService;
-    private TokenUtils tokenUtils;
 
     @PostMapping("/adicionar/{cpf}")
     public ResponseEntity<EnderecoRespostaDTO> adicionarEndereco(
-                @RequestHeader("Authorization") String headerAutorizacao,
                 @PathVariable("cpf") String cpf,
                 @RequestBody @Valid EnderecoDTO enderecoDTO) {
-        String token = tokenUtils.validarToken(headerAutorizacao);
-        String cpfEditor = tokenService.obterSujeito(token);
-        Pessoa editor = pessoaService.buscarPorCpf(cpfEditor);    
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails user = (UserDetails) authentication.getPrincipal();
+        Pessoa editor = pessoaService.buscarPorCpf(user.getUsername());    
         Pessoa dono = pessoaService.buscarPorCpf(cpf);
         pessoaService.atualizar(dono.getCpf(), dono, editor);
         Endereco endereco = enderecoDTO.converterParaEntidadeComDono(dono);
@@ -50,11 +47,10 @@ public class EnderecoAdminController {
 
     @DeleteMapping("/excluir/{id}")
     public ResponseEntity<EnderecoRespostaDTO> excluirEndereco(
-                @PathVariable("id") Long id,
-                @RequestHeader("Authorization") String headerAutorizacao){
-        String token = tokenUtils.validarToken(headerAutorizacao);
-        String cpfEditor = tokenService.obterSujeito(token);
-        Pessoa editor = pessoaService.buscarPorCpf(cpfEditor);            
+                @PathVariable("id") Long id){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails user = (UserDetails) authentication.getPrincipal();
+        Pessoa editor = pessoaService.buscarPorCpf(user.getUsername());        
         Pessoa dono = enderecoService.buscarEnderecoPorId(id).getPessoa();
         pessoaService.atualizar(dono.getCpf(), dono, editor);
         Endereco endereco = enderecoService.excluir(id);
@@ -65,11 +61,10 @@ public class EnderecoAdminController {
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<EnderecoRespostaDTO> atualizarEndereco(
                 @PathVariable("id") Long id, 
-                @RequestBody @Valid EnderecoDTO enderecoDTO,
-                @RequestHeader("Authorization") String headerAutorizacao){
-        String token = tokenUtils.validarToken(headerAutorizacao);
-        String cpfEditor = tokenService.obterSujeito(token);
-        Pessoa editor = pessoaService.buscarPorCpf(cpfEditor);
+                @RequestBody @Valid EnderecoDTO enderecoDTO){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails user = (UserDetails) authentication.getPrincipal();
+        Pessoa editor = pessoaService.buscarPorCpf(user.getUsername());   
         Pessoa dono = enderecoService.buscarEnderecoPorId(id).getPessoa();
         pessoaService.atualizar(dono.getCpf(), dono, editor);
         Endereco novoEndereco = enderecoDTO.converterParaEntidadeComDono(dono);
