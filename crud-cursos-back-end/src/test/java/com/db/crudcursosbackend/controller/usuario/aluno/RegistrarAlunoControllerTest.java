@@ -35,13 +35,13 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-class RegistrarControllerTest {
+class RegistrarAlunoControllerTest {
     
     @Autowired
     private MockMvc mockMvc;
 
     @InjectMocks
-    private RegistrarController registrarController;
+    private RegistrarAlunoController registrarController;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -107,7 +107,7 @@ class RegistrarControllerTest {
         when(tokenService.gerarToken("73565638435")).thenReturn("tokenValido");
         when(alunoService.registrar(any(), any())).thenReturn(alunoDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO));
         
-        mockMvc.perform(MockMvcRequestBuilders.post("/registrar/usuario")
+        mockMvc.perform(MockMvcRequestBuilders.post("/registrar/aluno/usuario")
                                                 .contentType("application/json")
                                                 .content(alunoJson))
                                                 .andExpect(MockMvcResultMatchers.status().isCreated())
@@ -156,7 +156,7 @@ class RegistrarControllerTest {
         when(tokenService.gerarToken("73565638430")).thenReturn("tokenValido");
         when(alunoService.registrar(any(), any())).thenReturn(alunoDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO));
         
-        mockMvc.perform(MockMvcRequestBuilders.post("/registrar/usuario")
+        mockMvc.perform(MockMvcRequestBuilders.post("/registrar/aluno/usuario")
                                                 .contentType("application/json")
                                                 .content(alunoJson))
                                                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
@@ -203,7 +203,7 @@ class RegistrarControllerTest {
         when(tokenService.gerarToken("73565638435")).thenReturn("tokenValido");
         when(alunoService.registrar(any(), any())).thenReturn(alunoDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO));
         
-        mockMvc.perform(MockMvcRequestBuilders.post("/registrar/usuario")
+        mockMvc.perform(MockMvcRequestBuilders.post("/registrar/aluno/usuario")
                                                 .contentType("application/json")
                                                 .content(alunoJson))
                                                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
@@ -261,7 +261,7 @@ class RegistrarControllerTest {
         when(tokenService.gerarToken("73565638435")).thenReturn("outroTokenValido");
         when(alunoService.registrar(any(), any())).thenReturn(aluno);
         
-        mockMvc.perform(MockMvcRequestBuilders.post("/registrar/admin")
+        mockMvc.perform(MockMvcRequestBuilders.post("/registrar/aluno/admin")
                                                 .contentType("application/json")
                                                 .header("Authorization", "Bearer tokenValido")
                                                 .content(alunoJson))
@@ -322,7 +322,7 @@ class RegistrarControllerTest {
         when(tokenService.gerarToken("73565638430")).thenReturn("outroTokenValido");
         when(alunoService.registrar(any(), any())).thenReturn(aluno);
         
-        mockMvc.perform(MockMvcRequestBuilders.post("/registrar/admin")
+        mockMvc.perform(MockMvcRequestBuilders.post("/registrar/aluno/admin")
                                                 .contentType("application/json")
                                                 .header("Authorization", "Bearer tokenValido")
                                                 .content(alunoJson))
@@ -381,7 +381,7 @@ class RegistrarControllerTest {
         when(tokenService.gerarToken("73565638435")).thenReturn("outroTokenValido");
         when(alunoService.registrar(any(), any())).thenReturn(aluno);
         
-        mockMvc.perform(MockMvcRequestBuilders.post("/registrar/admin")
+        mockMvc.perform(MockMvcRequestBuilders.post("/registrar/aluno/admin")
                                                 .contentType("application/json")
                                                 .header("Authorization", "Bearer tokenValido")
                                                 .content(alunoJson))

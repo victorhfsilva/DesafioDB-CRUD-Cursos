@@ -8,7 +8,6 @@ import com.db.crudcursosbackend.domain.usuario.contato.Contato;
 import com.db.crudcursosbackend.domain.usuario.endereco.Endereco;
 import com.db.crudcursosbackend.domain.usuario.papel.Papel;
 import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -24,9 +24,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
-@RequestMapping(value = "/registrar")
+@RequestMapping(value = "/registrar/aluno")
 @AllArgsConstructor
-public class RegistrarController {
+public class RegistrarAlunoController {
     
     private PasswordEncoder passwordEncoder;
     private IAlunoService alunoService;
