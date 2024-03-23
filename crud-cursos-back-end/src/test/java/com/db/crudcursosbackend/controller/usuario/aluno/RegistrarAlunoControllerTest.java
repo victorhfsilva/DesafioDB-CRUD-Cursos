@@ -263,7 +263,6 @@ class RegistrarAlunoControllerTest {
         
         mockMvc.perform(MockMvcRequestBuilders.post("/registrar/aluno/admin")
                                                 .contentType("application/json")
-                                                .header("Authorization", "Bearer tokenValido")
                                                 .content(alunoJson))
                                                 .andExpect(MockMvcResultMatchers.status().isCreated())
                                                 .andExpect(MockMvcResultMatchers.jsonPath("$.token").value("outroTokenValido"))
@@ -324,7 +323,6 @@ class RegistrarAlunoControllerTest {
         
         mockMvc.perform(MockMvcRequestBuilders.post("/registrar/aluno/admin")
                                                 .contentType("application/json")
-                                                .header("Authorization", "Bearer tokenValido")
                                                 .content(alunoJson))
                                                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
@@ -383,7 +381,6 @@ class RegistrarAlunoControllerTest {
         
         mockMvc.perform(MockMvcRequestBuilders.post("/registrar/aluno/admin")
                                                 .contentType("application/json")
-                                                .header("Authorization", "Bearer tokenValido")
                                                 .content(alunoJson))
                                                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }

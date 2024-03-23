@@ -321,7 +321,6 @@ class RegistrarProfessorControllerTest {
         
         mockMvc.perform(MockMvcRequestBuilders.post("/registrar/professor/admin")
                                                 .contentType("application/json")
-                                                .header("Authorization", "Bearer tokenValido")
                                                 .content(professorJson))
                                                 .andExpect(MockMvcResultMatchers.status().isCreated())
                                                 .andExpect(MockMvcResultMatchers.jsonPath("$.token").value("outroTokenValido"))
@@ -397,7 +396,6 @@ class RegistrarProfessorControllerTest {
         
         mockMvc.perform(MockMvcRequestBuilders.post("/registrar/professor/admin")
                                                 .contentType("application/json")
-                                                .header("Authorization", "Bearer tokenValido")
                                                 .content(professorJson))
                                                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
@@ -470,7 +468,6 @@ class RegistrarProfessorControllerTest {
         
         mockMvc.perform(MockMvcRequestBuilders.post("/registrar/professor/admin")
                                                 .contentType("application/json")
-                                                .header("Authorization", "Bearer tokenValido")
                                                 .content(professorJson))
                                                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }

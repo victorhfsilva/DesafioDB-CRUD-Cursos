@@ -9,4 +9,5 @@ public interface IAlunoService {
     Aluno excluir(String cpf);
     Aluno ativar(String cpf, Pessoa editor);
     Aluno desativar(String cpf, Pessoa editor);
+    Aluno buscarPorCpf(String cpf);
 }

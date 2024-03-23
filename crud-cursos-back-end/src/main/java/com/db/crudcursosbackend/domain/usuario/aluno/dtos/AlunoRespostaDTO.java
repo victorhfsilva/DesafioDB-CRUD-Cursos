@@ -7,7 +7,6 @@ import com.db.crudcursosbackend.domain.cursos.Curso;
 import com.db.crudcursosbackend.domain.usuario.aluno.Aluno;
 import com.db.crudcursosbackend.domain.usuario.contato.dtos.ContatoRespostaDTO;
 import com.db.crudcursosbackend.domain.usuario.endereco.dtos.EnderecoRespostaDTO;
-import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

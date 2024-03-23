@@ -5,6 +5,7 @@ import com.db.crudcursosbackend.domain.usuario.aluno.Aluno;
 import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IAlunoService;
 import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IAtivacaoAlunoService;
 import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IAtualizarCursoService;
+import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IBuscarAlunoPorCpf;
 import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IExcluirAlunoService;
 import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IRegistrarAlunoService;
 import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
@@ -14,6 +15,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class AlunoService implements IAlunoService {
 
+    private IBuscarAlunoPorCpf buscarAlunoPorCpfService;
     private IAtualizarCursoService atualizarAlunoService;
     private IExcluirAlunoService excluirAlunoService;
     private IRegistrarAlunoService registrarAlunoService;
@@ -42,6 +44,11 @@ public class AlunoService implements IAlunoService {
     @Override
     public Aluno desativar(String cpf, Pessoa editor) {
         return ativacaoAlunoService.desativar(cpf, editor);
+    }
+
+    @Override
+    public Aluno buscarPorCpf(String cpf) {
+       return buscarAlunoPorCpfService.buscarPorCpf(cpf);
     }
     
 }
