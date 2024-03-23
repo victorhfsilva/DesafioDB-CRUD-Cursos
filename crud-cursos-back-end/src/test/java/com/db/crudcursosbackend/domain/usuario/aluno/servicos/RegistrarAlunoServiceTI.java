@@ -75,8 +75,6 @@ public class RegistrarAlunoServiceTI {
                         .dataDeNascimento(LocalDate.of(1990, 5, 15))
                         .contato(contato)
                         .enderecos(enderecos)
-                        .matricula("A003")
-                        .dataDeIngresso(LocalDate.now())
                         .build();
 
         Aluno alunoSalvo = registrarAlunoService.registrar(aluno, aluno);

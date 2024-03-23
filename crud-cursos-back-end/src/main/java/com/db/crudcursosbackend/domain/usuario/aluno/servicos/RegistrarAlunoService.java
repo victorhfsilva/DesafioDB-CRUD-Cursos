@@ -1,6 +1,9 @@
 package com.db.crudcursosbackend.domain.usuario.aluno.servicos;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 import com.db.crudcursosbackend.domain.usuario.contato.Contato;
 import com.db.crudcursosbackend.domain.usuario.contato.repositorios.ContatoRepository;
@@ -29,12 +32,22 @@ public class RegistrarAlunoService implements IRegistrarAlunoService {
         Contato contato = aluno.getContato();
         salvarContato(contato);
 
-        List<Endereco> enderecos = aluno.getEnderecos();  
+        List<Endereco> enderecos = aluno.getEnderecos();
+        
+        matricular(aluno);  
         Aluno alunoSalvo = alunoRepository.save(aluno);
-    
+
         salvarEnderecos(enderecos, alunoSalvo);
 
         return alunoRepository.findById(alunoSalvo.getId()).orElseThrow();
+    }
+
+    private void matricular(Aluno aluno){
+        String uuid = UUID.randomUUID().toString();
+        String matricula = uuid.replaceAll("-", "").toUpperCase();
+        matricula = matricula.substring(0, 8);
+        aluno.setMatricula(matricula);
+        aluno.setDataDeIngresso(LocalDate.now());
     }
 
     private void salvarEnderecos(List<Endereco> enderecos, Aluno alunoSalvo) {
