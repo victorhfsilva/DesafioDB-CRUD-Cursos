@@ -1,4 +1,4 @@
-package com.db.crudcursosbackend.controller.usuario.aluno;
+package com.db.crudcursosbackend.controller.usuario.professor;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -18,14 +18,15 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.time.LocalDate;
 import java.util.List;
+import com.db.crudcursosbackend.domain.cursos.dtos.CursoDTO;
 import com.db.crudcursosbackend.domain.usuario.contato.dtos.ContatoDTO;
 import com.db.crudcursosbackend.domain.usuario.endereco.dtos.EnderecoDTO;
 import com.db.crudcursosbackend.domain.usuario.estado.Estado;
 import com.db.crudcursosbackend.domain.usuario.papel.Papel;
-import com.db.crudcursosbackend.domain.usuario.aluno.dtos.AtualizarAlunoDTO;
-import com.db.crudcursosbackend.domain.usuario.aluno.servicos.AlunoService;
-import com.db.crudcursosbackend.domain.usuario.aluno.Aluno;
-import com.db.crudcursosbackend.domain.usuario.aluno.dtos.AlunoDTO;
+import com.db.crudcursosbackend.domain.usuario.professor.dtos.AtualizarProfessorDTO;
+import com.db.crudcursosbackend.domain.usuario.professor.servicos.ProfessorService;
+import com.db.crudcursosbackend.domain.usuario.professor.Professor;
+import com.db.crudcursosbackend.domain.usuario.professor.dtos.ProfessorDTO;
 import com.db.crudcursosbackend.infra.seguranca.servicos.TokenService;
 import com.db.crudcursosbackend.infra.seguranca.utils.TokenUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,7 +35,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-class AlunoUsuarioControllerTest {
+class ProfessorUsuarioControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -43,7 +44,7 @@ class AlunoUsuarioControllerTest {
     private PasswordEncoder passwordEncoder;
 
     @InjectMocks
-    private AlunoUsuarioController pessoaUsuarioController;
+    private ProfessorUsuarioController pessoaUsuarioController;
 
     @MockBean
     private TokenUtils tokenUtils;
@@ -52,7 +53,7 @@ class AlunoUsuarioControllerTest {
     private TokenService tokenService;
 
     @MockBean
-    private AlunoService alunoService;
+    private ProfessorService professorService;
 
     private ObjectMapper objectMapper;
 
@@ -90,20 +91,34 @@ class AlunoUsuarioControllerTest {
 
         List<EnderecoDTO> enderecosDTOs = List.of(enderecoDTO1, enderecoDTO2);
 
-        AlunoDTO alunoDTO = AlunoDTO.builder().nome("Nome")
+        CursoDTO cursoDTO1 = CursoDTO.builder().nome("Matemática") 
+                                                .descricao("Matemática para todos")
+                                                .cargaHoraria(300)
+                                                .build();
+
+        CursoDTO cursoDTO2 = CursoDTO.builder().nome("Geometria") 
+                                                .descricao("Geometria inclusiva")
+                                                .cargaHoraria(300)
+                                                .build();
+
+        List<CursoDTO> cursosDTOs = List.of(cursoDTO1, cursoDTO2); 
+
+        ProfessorDTO professorDTO = ProfessorDTO.builder().nome("Nome")
                                                     .sobrenome("Sobrenome")
                                                     .cpf("73565638435")
                                                     .senha("L33tP@swd")
                                                     .dataDeNascimento(LocalDate.of(2004, 3, 7))
                                                     .contato(contatoDTO)
                                                     .enderecos(enderecosDTOs)
+                                                    .salario(22064.68)
+                                                    .cursos(cursosDTOs)
                                                     .build();
         
-        Aluno aluno = alunoDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
+        Professor professor = professorDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
 
-        when(alunoService.buscarPorCpf("73565638435")).thenReturn(aluno);
+        when(professorService.buscarPorCpf("73565638435")).thenReturn(professor);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/usuario/aluno/dados"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/usuario/professor/dados"))
                                                 .andExpect(MockMvcResultMatchers.status().isOk())
                                                 .andExpect(MockMvcResultMatchers.jsonPath("$.cpf").value("73565638435"))
                                                 .andExpect(MockMvcResultMatchers.jsonPath("$.nome").value("Nome"));
@@ -137,21 +152,35 @@ class AlunoUsuarioControllerTest {
 
         List<EnderecoDTO> enderecosDTOs = List.of(enderecoDTO1, enderecoDTO2);
 
-        AlunoDTO alunoDTO = AlunoDTO.builder().nome("Nome")
+        CursoDTO cursoDTO1 = CursoDTO.builder().nome("Matemática") 
+                                                .descricao("Matemática para todos")
+                                                .cargaHoraria(300)
+                                                .build();
+
+        CursoDTO cursoDTO2 = CursoDTO.builder().nome("Geometria") 
+                                                .descricao("Geometria inclusiva")
+                                                .cargaHoraria(300)
+                                                .build();
+
+        List<CursoDTO> cursosDTOs = List.of(cursoDTO1, cursoDTO2); 
+
+        ProfessorDTO professorDTO = ProfessorDTO.builder().nome("Nome")
                                                     .sobrenome("Sobrenome")
                                                     .cpf("73565638435")
                                                     .senha("L33tP@swd")
                                                     .dataDeNascimento(LocalDate.of(2004, 3, 7))
                                                     .contato(contatoDTO)
                                                     .enderecos(enderecosDTOs)
+                                                    .salario(22064.68)
+                                                    .cursos(cursosDTOs)
                                                     .build();
         
-        Aluno aluno = alunoDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
+        Professor professor = professorDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
         
-        when(alunoService.buscarPorCpf("73565638435")).thenReturn(aluno);
-        when(alunoService.desativar(eq("73565638435"), any())).thenReturn(aluno);
+        when(professorService.buscarPorCpf("73565638435")).thenReturn(professor);
+        when(professorService.desativar(eq("73565638435"), any())).thenReturn(professor);
 
-        mockMvc.perform(MockMvcRequestBuilders.patch("/usuario/aluno/desativar"))
+        mockMvc.perform(MockMvcRequestBuilders.patch("/usuario/professor/desativar"))
                                                 .andExpect(MockMvcResultMatchers.status().isOk())
                                                 .andExpect(MockMvcResultMatchers.jsonPath("$.cpf").value("73565638435"))
                                                 .andExpect(MockMvcResultMatchers.jsonPath("$.nome").value("Nome"));
@@ -185,21 +214,35 @@ class AlunoUsuarioControllerTest {
 
         List<EnderecoDTO> enderecosDTOs = List.of(enderecoDTO1, enderecoDTO2);
 
-        AlunoDTO alunoDTO = AlunoDTO.builder().nome("Nome")
+        CursoDTO cursoDTO1 = CursoDTO.builder().nome("Matemática") 
+                                                .descricao("Matemática para todos")
+                                                .cargaHoraria(300)
+                                                .build();
+
+        CursoDTO cursoDTO2 = CursoDTO.builder().nome("Geometria") 
+                                                .descricao("Geometria inclusiva")
+                                                .cargaHoraria(300)
+                                                .build();
+
+        List<CursoDTO> cursosDTOs = List.of(cursoDTO1, cursoDTO2); 
+
+        ProfessorDTO professorDTO = ProfessorDTO.builder().nome("Nome")
                                                     .sobrenome("Sobrenome")
                                                     .cpf("73565638435")
                                                     .senha("L33tP@swd")
                                                     .dataDeNascimento(LocalDate.of(2004, 3, 7))
                                                     .contato(contatoDTO)
                                                     .enderecos(enderecosDTOs)
+                                                    .salario(22064.68)
+                                                    .cursos(cursosDTOs)
                                                     .build();
         
-        Aluno aluno = alunoDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
+        Professor professor = professorDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
 
-        when(alunoService.buscarPorCpf("73565638435")).thenReturn(aluno);
-        when(alunoService.ativar(eq("73565638435"), any())).thenReturn(aluno);
+        when(professorService.buscarPorCpf("73565638435")).thenReturn(professor);
+        when(professorService.ativar(eq("73565638435"), any())).thenReturn(professor);
 
-        mockMvc.perform(MockMvcRequestBuilders.patch("/usuario/aluno/ativar"))
+        mockMvc.perform(MockMvcRequestBuilders.patch("/usuario/professor/ativar"))
                                                 .andExpect(MockMvcResultMatchers.status().isOk())
                                                 .andExpect(MockMvcResultMatchers.jsonPath("$.cpf").value("73565638435"))
                                                 .andExpect(MockMvcResultMatchers.jsonPath("$.nome").value("Nome"));
@@ -214,7 +257,7 @@ class AlunoUsuarioControllerTest {
                                                     .build();
 
 
-        AtualizarAlunoDTO alunoDTO = AtualizarAlunoDTO.builder().nome("Nome")
+        AtualizarProfessorDTO professorDTO = AtualizarProfessorDTO.builder().nome("Nome")
                                                     .sobrenome("Sobrenome")
                                                     .cpf("73565638435")
                                                     .senha("L33tP@swd")
@@ -222,16 +265,16 @@ class AlunoUsuarioControllerTest {
                                                     .contato(contatoDTO)
                                                     .build();
         
-        String alunoJson = objectMapper.writeValueAsString(alunoDTO);
+        String professorJson = objectMapper.writeValueAsString(professorDTO);
         
-        Aluno aluno = alunoDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
+        Professor professor = professorDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
 
-        when(alunoService.buscarPorCpf("73565638435")).thenReturn(aluno);
-        when(alunoService.atualizar(eq("73565638435"), any(), any())).thenReturn(aluno);
+        when(professorService.buscarPorCpf("73565638435")).thenReturn(professor);
+        when(professorService.atualizar(eq("73565638435"), any(), any())).thenReturn(professor);
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/usuario/aluno/atualizar")
+        mockMvc.perform(MockMvcRequestBuilders.put("/usuario/professor/atualizar")
                                                 .contentType("application/json")
-                                                .content(alunoJson))
+                                                .content(professorJson))
                                                 .andExpect(MockMvcResultMatchers.status().isOk())
                                                 .andExpect(MockMvcResultMatchers.jsonPath("$.cpf").value("73565638435"))
                                                 .andExpect(MockMvcResultMatchers.jsonPath("$.nome").value("Nome"));
@@ -245,7 +288,7 @@ class AlunoUsuarioControllerTest {
                                                     .celular("123456789")
                                                     .build();
 
-        AtualizarAlunoDTO alunoDTO = AtualizarAlunoDTO.builder().nome("Nome")
+        AtualizarProfessorDTO professorDTO = AtualizarProfessorDTO.builder().nome("Nome")
                                                                 .sobrenome("Sobrenome")
                                                                 .cpf("73565638430")
                                                                 .senha("L33tP@swd")
@@ -253,16 +296,16 @@ class AlunoUsuarioControllerTest {
                                                                 .contato(contatoDTO)
                                                                 .build();
         
-        String alunoJson = objectMapper.writeValueAsString(alunoDTO);
+        String professorJson = objectMapper.writeValueAsString(professorDTO);
         
-        Aluno aluno = alunoDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
+        Professor professor = professorDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
 
-        when(alunoService.buscarPorCpf("73565638435")).thenReturn(aluno);
-        when(alunoService.atualizar(eq("73565638435"), any(), any())).thenReturn(aluno);
+        when(professorService.buscarPorCpf("73565638435")).thenReturn(professor);
+        when(professorService.atualizar(eq("73565638435"), any(), any())).thenReturn(professor);
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/usuario/aluno/atualizar")
+        mockMvc.perform(MockMvcRequestBuilders.put("/usuario/professor/atualizar")
                                                 .contentType("application/json")
-                                                .content(alunoJson))
+                                                .content(professorJson))
                                                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
@@ -274,7 +317,7 @@ class AlunoUsuarioControllerTest {
                                                     .celular("123456789")
                                                     .build();
 
-        AtualizarAlunoDTO alunoDTO = AtualizarAlunoDTO.builder().nome("Nome")
+        AtualizarProfessorDTO professorDTO = AtualizarProfessorDTO.builder().nome("Nome")
                                                     .sobrenome("Sobrenome")
                                                     .cpf("73565638435")
                                                     .senha("senha123")
@@ -282,16 +325,16 @@ class AlunoUsuarioControllerTest {
                                                     .contato(contatoDTO)
                                                     .build();
         
-        String alunoJson = objectMapper.writeValueAsString(alunoDTO);
+        String professorJson = objectMapper.writeValueAsString(professorDTO);
         
-        Aluno aluno = alunoDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
+        Professor professor = professorDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
 
-        when(alunoService.buscarPorCpf("73565638435")).thenReturn(aluno);
-        when(alunoService.atualizar(eq("73565638435"), any(), any())).thenReturn(aluno);
+        when(professorService.buscarPorCpf("73565638435")).thenReturn(professor);
+        when(professorService.atualizar(eq("73565638435"), any(), any())).thenReturn(professor);
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/usuario/aluno/atualizar")
+        mockMvc.perform(MockMvcRequestBuilders.put("/usuario/professor/atualizar")
                                                 .contentType("application/json")
-                                                .content(alunoJson))
+                                                .content(professorJson))
                                                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 }

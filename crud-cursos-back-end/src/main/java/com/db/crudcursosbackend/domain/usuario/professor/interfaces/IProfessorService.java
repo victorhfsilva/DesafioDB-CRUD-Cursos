@@ -9,4 +9,5 @@ public interface IProfessorService {
     Professor excluir(String cpf);
     Professor ativar(String cpf, Pessoa editor);
     Professor desativar(String cpf, Pessoa editor);
+    Professor buscarPorCpf(String cpf);
 }

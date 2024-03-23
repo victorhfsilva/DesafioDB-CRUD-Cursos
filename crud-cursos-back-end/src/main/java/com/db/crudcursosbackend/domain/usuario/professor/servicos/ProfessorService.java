@@ -7,6 +7,7 @@ import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import com.db.crudcursosbackend.domain.usuario.professor.Professor;
 import com.db.crudcursosbackend.domain.usuario.professor.interfaces.IAtivacaoProfessorService;
 import com.db.crudcursosbackend.domain.usuario.professor.interfaces.IAtualizarProfessorService;
+import com.db.crudcursosbackend.domain.usuario.professor.interfaces.IBuscarProfessorPorCpf;
 import com.db.crudcursosbackend.domain.usuario.professor.interfaces.IExcluirProfessorService;
 import com.db.crudcursosbackend.domain.usuario.professor.interfaces.IProfessorService;
 import com.db.crudcursosbackend.domain.usuario.professor.interfaces.IRegistrarProfessorService;
@@ -20,6 +21,7 @@ public class ProfessorService implements IProfessorService {
     private IAtualizarProfessorService atualizarProfessorService;
     private IExcluirProfessorService excluirProfessorService;
     private IAtivacaoProfessorService ativacaoProfessorService;
+    private IBuscarProfessorPorCpf buscarProfessorPorCpfService;
 
     public Professor registrar(Professor pessoa, Pessoa editor) {
        return registrarProfessorService.registrar(pessoa, editor);
@@ -43,6 +45,11 @@ public class ProfessorService implements IProfessorService {
     @Override
     public Professor desativar(String cpf, Pessoa editor) {
         return ativacaoProfessorService.desativar(cpf, editor);
+    }
+
+    @Override
+    public Professor buscarPorCpf(String cpf) {
+        return buscarProfessorPorCpfService.buscarPorCpf(cpf);        
     }
 
 }
