@@ -20,7 +20,7 @@ INSERT INTO cursos (id, ativo, nome, descricao, carga_horaria, professor_id) VAL
 
 INSERT INTO pessoas (id, ativo, nome, sobrenome, cpf, senha, papel, data_nascimento, contato_id) VALUES
 (2, true, 'Aluno', 'Um', '22222222222', '$2a$10$706THYvOENiTmnCajGKiIOKKmF8reqf6bJGmQEiIF37R8aA/J6tyO', 'USUARIO', '2000-01-01', 2),
-(3, true, 'Aluno', 'Dois', '33333333333', '$2a$10$PVm0s0ap2cL4iLSj5evHXOurDresp9TzL7QmPqqEK4.XzBZKuoRsu', 'USUARIO', '2000-01-02', 3);
+(3, true, 'Aluno', 'Dois', '33333333333', '$2a$10$PVm0s0ap2cL4iLSj5evHXOurDresp9TzL7QmPqqEK4.XzBZKuoRsu', 'ADMIN', '2000-01-02', 3);
 
 INSERT INTO alunos (matricula, data_ingresso, id) VALUES
 ('A001', '2020-01-01', 2),

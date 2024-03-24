@@ -23,7 +23,6 @@ public class AlunoRespostaDTO {
     private List<EnderecoRespostaDTO> enderecos;
     private String matricula;
     private LocalDate dataDeIngresso;
-    private List<Curso> cursos;
 
     public AlunoRespostaDTO(Aluno aluno){
         this.id = aluno.getId();
@@ -37,6 +36,5 @@ public class AlunoRespostaDTO {
                                                 .toList();  
         this.matricula = aluno.getMatricula();
         this.dataDeIngresso = aluno.getDataDeIngresso();
-        this.cursos = aluno.getCursos();
     }
 }

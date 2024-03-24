@@ -20,6 +20,7 @@ import com.db.crudcursosbackend.domain.usuario.professor.Professor;
 import com.db.crudcursosbackend.domain.usuario.professor.dtos.ProfessorDTO;
 import com.db.crudcursosbackend.domain.usuario.professor.dtos.AtualizarProfessorDTO;
 import com.db.crudcursosbackend.domain.usuario.professor.servicos.ProfessorService;
+import com.db.crudcursosbackend.domain.cursos.dtos.CursoDTO;
 import com.db.crudcursosbackend.domain.usuario.contato.Contato;
 import com.db.crudcursosbackend.domain.usuario.contato.ContatoBuilder;
 import com.db.crudcursosbackend.domain.usuario.contato.dtos.ContatoDTO;
@@ -90,6 +91,18 @@ class ProfessorAdminControllerTest {
 
         List<EnderecoDTO> enderecosDTOs = List.of(enderecoDTO1, enderecoDTO2);
 
+        CursoDTO cursoDTO1 = CursoDTO.builder().nome("Matemática") 
+                                                .descricao("Matemática para todos")
+                                                .cargaHoraria(300)
+                                                .build();
+
+        CursoDTO cursoDTO2 = CursoDTO.builder().nome("Geometria") 
+                                                .descricao("Geometria inclusiva")
+                                                .cargaHoraria(300)
+                                                .build();
+
+        List<CursoDTO> cursosDTOs = List.of(cursoDTO1, cursoDTO2); 
+
         ProfessorDTO professorDTO = ProfessorDTO.builder().nome("Nome")
                                                     .sobrenome("Sobrenome")
                                                     .cpf("73565638435")
@@ -97,6 +110,8 @@ class ProfessorAdminControllerTest {
                                                     .dataDeNascimento(LocalDate.of(2004, 3, 7))
                                                     .contato(contatoDTO)
                                                     .enderecos(enderecosDTOs)
+                                                    .salario(22064.68)
+                                                    .cursos(cursosDTOs)
                                                     .build();
         
         Professor professor = professorDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
@@ -151,6 +166,17 @@ class ProfessorAdminControllerTest {
                                                         .build();
 
         List<EnderecoDTO> enderecosDTOs = List.of(enderecoDTO1, enderecoDTO2);
+        CursoDTO cursoDTO1 = CursoDTO.builder().nome("Matemática") 
+                                                .descricao("Matemática para todos")
+                                                .cargaHoraria(300)
+                                                .build();
+
+        CursoDTO cursoDTO2 = CursoDTO.builder().nome("Geometria") 
+                                                .descricao("Geometria inclusiva")
+                                                .cargaHoraria(300)
+                                                .build();
+
+        List<CursoDTO> cursosDTOs = List.of(cursoDTO1, cursoDTO2); 
 
         ProfessorDTO professorDTO = ProfessorDTO.builder().nome("Nome")
                                                     .sobrenome("Sobrenome")
@@ -159,6 +185,8 @@ class ProfessorAdminControllerTest {
                                                     .dataDeNascimento(LocalDate.of(2004, 3, 7))
                                                     .contato(contatoDTO)
                                                     .enderecos(enderecosDTOs)
+                                                    .salario(22064.68)
+                                                    .cursos(cursosDTOs)
                                                     .build();
         
         Professor professor = professorDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
@@ -216,6 +244,18 @@ class ProfessorAdminControllerTest {
 
         List<EnderecoDTO> enderecosDTOs = List.of(enderecoDTO1, enderecoDTO2);
 
+        CursoDTO cursoDTO1 = CursoDTO.builder().nome("Matemática") 
+                                                .descricao("Matemática para todos")
+                                                .cargaHoraria(300)
+                                                .build();
+
+        CursoDTO cursoDTO2 = CursoDTO.builder().nome("Geometria") 
+                                                .descricao("Geometria inclusiva")
+                                                .cargaHoraria(300)
+                                                .build();
+
+        List<CursoDTO> cursosDTOs = List.of(cursoDTO1, cursoDTO2); 
+
         ProfessorDTO professorDTO = ProfessorDTO.builder().nome("Nome")
                                                     .sobrenome("Sobrenome")
                                                     .cpf("73565638435")
@@ -223,6 +263,8 @@ class ProfessorAdminControllerTest {
                                                     .dataDeNascimento(LocalDate.of(2004, 3, 7))
                                                     .contato(contatoDTO)
                                                     .enderecos(enderecosDTOs)
+                                                    .salario(22064.68)
+                                                    .cursos(cursosDTOs)
                                                     .build();
         
         Professor professor = professorDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);

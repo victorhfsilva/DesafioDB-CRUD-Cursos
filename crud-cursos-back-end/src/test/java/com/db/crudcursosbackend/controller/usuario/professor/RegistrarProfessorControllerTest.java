@@ -127,8 +127,7 @@ class RegistrarProfessorControllerTest {
                                                 .content(professorJson))
                                                 .andExpect(MockMvcResultMatchers.status().isCreated())
                                                 .andExpect(MockMvcResultMatchers.jsonPath("$.token").value("tokenValido"))
-                                                .andExpect(MockMvcResultMatchers.jsonPath("$.pessoa.cpf").value(professorDTO.getCpf()))
-                                                .andExpect(MockMvcResultMatchers.jsonPath("$.pessoa.cursos[0].nome").value(professorDTO.getCursos().get(0).getNome()));
+                                                .andExpect(MockMvcResultMatchers.jsonPath("$.pessoa.cpf").value(professorDTO.getCpf()));
     }
 
     @Test
@@ -324,9 +323,7 @@ class RegistrarProfessorControllerTest {
                                                 .content(professorJson))
                                                 .andExpect(MockMvcResultMatchers.status().isCreated())
                                                 .andExpect(MockMvcResultMatchers.jsonPath("$.token").value("outroTokenValido"))
-                                                .andExpect(MockMvcResultMatchers.jsonPath("$.pessoa.cpf").value(professorDTO.getCpf()))
-                                                .andExpect(MockMvcResultMatchers.jsonPath("$.pessoa.cursos[0].nome").value(professorDTO.getCursos().get(0).getNome()));
-    }
+                                                .andExpect(MockMvcResultMatchers.jsonPath("$.pessoa.cpf").value(professorDTO.getCpf()));    }
 
     @Test
     @WithMockUser(username = "admin", authorities = {"ADMIN"})

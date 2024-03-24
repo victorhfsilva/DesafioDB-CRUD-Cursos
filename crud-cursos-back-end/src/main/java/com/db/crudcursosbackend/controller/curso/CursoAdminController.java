@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,6 @@ import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import com.db.crudcursosbackend.domain.usuario.pessoa.interfaces.IPessoaService;
 import com.db.crudcursosbackend.domain.usuario.professor.Professor;
 import com.db.crudcursosbackend.domain.usuario.professor.dtos.RespostaAtualizarProfessorDTO;
-
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
@@ -33,7 +33,6 @@ public class CursoAdminController {
 
     private ICursoService cursoService;
     private IPessoaService pessoaService;
-
 
     @PatchMapping("/desativar/{id}")
     @Operation(summary = "Desativa curso por Id.")
@@ -121,9 +120,9 @@ public class CursoAdminController {
         return ResponseEntity.status(HttpStatus.OK).body(resposta);
     }
 
-    @PutMapping("/registrar/{cpf}")
+    @PostMapping("/registrar/{cpf}")
     @Operation(summary = "Registra curso.")
-    public ResponseEntity<CursoRespostaDTO> atualizar(@PathVariable("cpf") String cpf,
+    public ResponseEntity<CursoRespostaDTO> registrar(@PathVariable("cpf") String cpf,
                                                         @RequestBody @Valid CursoDTO cursoDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails user = (UserDetails) authentication.getPrincipal();

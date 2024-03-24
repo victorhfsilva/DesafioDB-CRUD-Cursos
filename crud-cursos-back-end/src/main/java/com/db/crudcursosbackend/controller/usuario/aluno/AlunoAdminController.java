@@ -36,7 +36,6 @@ public class AlunoAdminController {
     private IPessoaService pessoaService;
     private PasswordEncoder passwordEncoder;
 
-
     @PatchMapping("/desativar/{cpf}")
     @Operation(summary = "Desativa um aluno por CPF.")
     public ResponseEntity<AlunoRespostaDTO> desativar(@PathVariable("cpf") String cpf){

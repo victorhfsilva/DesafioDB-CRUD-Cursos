@@ -44,12 +44,10 @@ public class AtualizarAlunoServiceTI {
 
         aluno.setContato(novoContato);
         aluno.setSobrenome("Miralles");
-        aluno.setMatricula("A004");
 
         Aluno alunoAtualizado = atualizarAlunoService.atualizar("22222222222", aluno, aluno);
 
         assertEquals(novoContato.getCelular(), alunoAtualizado.getContato().getCelular());
         assertEquals("Miralles", alunoAtualizado.getSobrenome());
-        assertEquals("A004", alunoAtualizado.getMatricula());
     }
 }

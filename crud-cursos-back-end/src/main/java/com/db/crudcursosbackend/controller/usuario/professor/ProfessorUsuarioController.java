@@ -73,7 +73,7 @@ public class ProfessorUsuarioController {
         String cpf = user.getUsername();
         Professor antigoProfessor = professorService.buscarPorCpf(cpf);
         Professor novoProfessor = professorDTO.converterParaEntidade(passwordEncoder, antigoProfessor.getPapel());
-        Professor professor = professorService.atualizar(cpf, novoProfessor, novoProfessor);
+        Professor professor = professorService.atualizar(cpf, novoProfessor, antigoProfessor);
         RespostaAtualizarProfessorDTO resposta = new RespostaAtualizarProfessorDTO(professor);
         return ResponseEntity.status(HttpStatus.OK).body(resposta);
     }

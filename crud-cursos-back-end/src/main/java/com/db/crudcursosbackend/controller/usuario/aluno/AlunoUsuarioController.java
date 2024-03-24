@@ -73,7 +73,7 @@ public class AlunoUsuarioController {
         String cpf = user.getUsername();
         Aluno antigoAluno = alunoService.buscarPorCpf(cpf);
         Aluno novoAluno = alunoDTO.converterParaEntidade(passwordEncoder, antigoAluno.getPapel());
-        Aluno aluno = alunoService.atualizar(cpf, novoAluno, novoAluno);
+        Aluno aluno = alunoService.atualizar(cpf, novoAluno, antigoAluno);
         RespostaAtualizarAlunoDTO resposta = new RespostaAtualizarAlunoDTO(aluno);
         return ResponseEntity.status(HttpStatus.OK).body(resposta);
     }

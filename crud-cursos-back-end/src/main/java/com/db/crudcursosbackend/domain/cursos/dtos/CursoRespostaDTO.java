@@ -6,6 +6,11 @@ import com.db.crudcursosbackend.domain.cursos.Curso;
 import com.db.crudcursosbackend.domain.usuario.aluno.dtos.AlunoRespostaDTO;
 import com.db.crudcursosbackend.domain.usuario.professor.dtos.ProfessorRespostaDTO;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public class CursoRespostaDTO {
     private String nome;
     private String descricao;

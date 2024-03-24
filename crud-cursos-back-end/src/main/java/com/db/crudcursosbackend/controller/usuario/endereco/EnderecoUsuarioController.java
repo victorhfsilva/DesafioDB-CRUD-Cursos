@@ -62,8 +62,7 @@ public class EnderecoUsuarioController {
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<EnderecoRespostaDTO> atualizarEndereco(
-                @RequestHeader("Authorization") String headerAutorizacao, 
+    public ResponseEntity<EnderecoRespostaDTO> atualizarEndereco( 
                 @PathVariable("id") Long id, 
                 @RequestBody @Valid EnderecoDTO enderecoDTO){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

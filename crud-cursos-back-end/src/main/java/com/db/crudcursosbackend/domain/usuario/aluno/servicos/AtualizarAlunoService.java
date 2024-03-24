@@ -1,5 +1,7 @@
 package com.db.crudcursosbackend.domain.usuario.aluno.servicos;
 
+import java.time.LocalDate;
+
 import org.springframework.stereotype.Service;
 import com.db.crudcursosbackend.domain.usuario.contato.Contato;
 import com.db.crudcursosbackend.domain.usuario.contato.repositorios.ContatoRepository;
@@ -25,6 +27,9 @@ public class AtualizarAlunoService implements IAtualizarCursoService {
 
         ValidacaoEditorUtil.validarAtualizacao(editor, alunoSalvo);
 
+        String matricula = alunoSalvo.getMatricula();
+        LocalDate dataDeIngresso = alunoSalvo.getDataDeIngresso();
+
         if(alunoSalvo.isAtivo()){
             alunoSalvo.setCpf(novoAluno.getCpf());
             alunoSalvo.setNome(novoAluno.getNome());
@@ -32,8 +37,8 @@ public class AtualizarAlunoService implements IAtualizarCursoService {
             alunoSalvo.setSenha(novoAluno.getSenha());
             alunoSalvo.setPapel(novoAluno.getPapel());
             alunoSalvo.setDataDeNascimento(novoAluno.getDataDeNascimento());
-            alunoSalvo.setMatricula(novoAluno.getMatricula());
-            alunoSalvo.setDataDeIngresso(novoAluno.getDataDeIngresso());
+            alunoSalvo.setDataDeIngresso(dataDeIngresso);
+            alunoSalvo.setMatricula(matricula);
             atualizarContato(alunoSalvo, novoAluno);
             return alunoRepository.save(alunoSalvo); 
         }

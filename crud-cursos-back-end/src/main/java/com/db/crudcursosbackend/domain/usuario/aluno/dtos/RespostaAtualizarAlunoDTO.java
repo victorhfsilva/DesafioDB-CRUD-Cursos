@@ -3,10 +3,8 @@ package com.db.crudcursosbackend.domain.usuario.aluno.dtos;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import java.time.LocalDate;
-
 import com.db.crudcursosbackend.domain.usuario.aluno.Aluno;
 import com.db.crudcursosbackend.domain.usuario.contato.dtos.ContatoRespostaDTO;
-import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 
 @Getter
 @AllArgsConstructor
@@ -27,5 +25,7 @@ public class RespostaAtualizarAlunoDTO {
         this.cpf = aluno.getCpf();
         this.dataDeNascimento = aluno.getDataDeNascimento();
         this.contato = new ContatoRespostaDTO(aluno.getContato());
+        this.matricula = aluno.getMatricula();
+        this.dataDeIngresso = aluno.getDataDeIngresso();
     }
 }
