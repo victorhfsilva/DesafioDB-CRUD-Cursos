@@ -11,6 +11,8 @@ import com.db.crudcursosbackend.domain.usuario.papel.Papel;
 import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import com.db.crudcursosbackend.domain.usuario.pessoa.interfaces.IPessoaService;
 import com.db.crudcursosbackend.infra.seguranca.interfaces.ITokenService;
+
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,6 +36,7 @@ public class RegistrarProfessorController {
     private ITokenService tokenService;
 
     @PostMapping("/usuario")
+    @Operation(summary = "Registra novo professor com permissões de usuário.")
     public ResponseEntity<RespostaRegistrarProfessorDTO> registrarUsuario(@RequestBody @Valid ProfessorDTO professorDTO) {
         Professor professor = professorDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
         Professor professorSalvo = professorService.registrar(professor, professor);
@@ -44,6 +47,7 @@ public class RegistrarProfessorController {
     }
 
     @PostMapping("/admin")
+    @Operation(summary = "Registra novo professor com permissões de administrador.")
     public ResponseEntity<RespostaRegistrarProfessorDTO> registrarAdmin(@RequestBody @Valid ProfessorDTO professorDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails user = (UserDetails) authentication.getPrincipal();

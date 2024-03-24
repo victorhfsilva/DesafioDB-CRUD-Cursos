@@ -19,6 +19,9 @@ import com.db.crudcursosbackend.domain.usuario.professor.dtos.ProfessorRespostaD
 import com.db.crudcursosbackend.domain.usuario.professor.dtos.AtualizarProfessorDTO;
 import com.db.crudcursosbackend.domain.usuario.professor.dtos.RespostaAtualizarProfessorDTO;
 import com.db.crudcursosbackend.domain.usuario.professor.interfaces.IProfessorService;
+
+import io.swagger.v3.oas.annotations.Operation;
+
 import com.db.crudcursosbackend.domain.usuario.papel.Papel;
 import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import com.db.crudcursosbackend.domain.usuario.pessoa.interfaces.IPessoaService;
@@ -36,6 +39,7 @@ public class ProfessorAdminController {
 
 
     @PatchMapping("/desativar/{cpf}")
+    @Operation(summary = "Desativa professor por CPF.")
     public ResponseEntity<ProfessorRespostaDTO> desativar(@PathVariable("cpf") String cpf) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails user = (UserDetails) authentication.getPrincipal();
@@ -47,6 +51,7 @@ public class ProfessorAdminController {
     }
     
     @DeleteMapping("/excluir/{cpf}")
+    @Operation(summary = "Exclui professor por CPF.")
     public ResponseEntity<ProfessorRespostaDTO> excluir(@PathVariable("cpf") String cpf){
         Professor professor = professorService.excluir(cpf);
         ProfessorRespostaDTO resposta = new ProfessorRespostaDTO(professor);
@@ -54,6 +59,7 @@ public class ProfessorAdminController {
     }
 
     @PatchMapping("/ativar/{cpf}")
+    @Operation(summary = "Ativa professor por CPF.")
     public ResponseEntity<ProfessorRespostaDTO> ativar(@PathVariable("cpf") String cpf){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails user = (UserDetails) authentication.getPrincipal();
@@ -65,6 +71,7 @@ public class ProfessorAdminController {
     }
 
     @PutMapping("/atualizar/{cpf}")
+    @Operation(summary = "Atualiza professor por CPF.")
     public ResponseEntity<RespostaAtualizarProfessorDTO> atualizar(@PathVariable("cpf") String cpf,
                                                         @RequestParam(name = "papel", defaultValue = "USUARIO") Papel papel, 
                                                         @RequestBody @Valid AtualizarProfessorDTO professorDTO) {

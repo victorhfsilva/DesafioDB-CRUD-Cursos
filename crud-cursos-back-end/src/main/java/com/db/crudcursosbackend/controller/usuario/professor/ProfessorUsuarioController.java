@@ -6,6 +6,8 @@ import com.db.crudcursosbackend.domain.usuario.professor.Professor;
 import com.db.crudcursosbackend.domain.usuario.professor.dtos.ProfessorRespostaDTO;
 import com.db.crudcursosbackend.domain.usuario.professor.dtos.RespostaAtualizarProfessorDTO;
 import com.db.crudcursosbackend.domain.usuario.professor.interfaces.IProfessorService;
+
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +31,7 @@ public class ProfessorUsuarioController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/dados")
+    @Operation(summary = "Obtém os dados do professor logado.")
     public ResponseEntity<ProfessorRespostaDTO> getDados() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails user = (UserDetails) authentication.getPrincipal();
@@ -39,6 +42,7 @@ public class ProfessorUsuarioController {
     }
 
     @PatchMapping("/desativar")
+    @Operation(summary = "Desativa o professor logado.")
     public ResponseEntity<ProfessorRespostaDTO> desativar(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails user = (UserDetails) authentication.getPrincipal();
@@ -50,6 +54,7 @@ public class ProfessorUsuarioController {
     }
     
     @PatchMapping("/ativar")
+    @Operation(summary = "Ativa o professor logado.")
     public ResponseEntity<ProfessorRespostaDTO> ativar(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails user = (UserDetails) authentication.getPrincipal();
@@ -61,6 +66,7 @@ public class ProfessorUsuarioController {
     }
 
     @PutMapping("/atualizar")
+    @Operation(summary = "Atualiza o professor logado.")
     public ResponseEntity<RespostaAtualizarProfessorDTO> atualizar(@RequestBody @Valid AtualizarProfessorDTO professorDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails user = (UserDetails) authentication.getPrincipal();

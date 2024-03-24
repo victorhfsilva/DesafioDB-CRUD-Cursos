@@ -22,6 +22,8 @@ import com.db.crudcursosbackend.domain.usuario.aluno.interfaces.IAlunoService;
 import com.db.crudcursosbackend.domain.usuario.papel.Papel;
 import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import com.db.crudcursosbackend.domain.usuario.pessoa.interfaces.IPessoaService;
+
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
@@ -36,6 +38,7 @@ public class AlunoAdminController {
 
 
     @PatchMapping("/desativar/{cpf}")
+    @Operation(summary = "Desativa um aluno por CPF.")
     public ResponseEntity<AlunoRespostaDTO> desativar(@PathVariable("cpf") String cpf){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails user = (UserDetails) authentication.getPrincipal();
@@ -47,6 +50,7 @@ public class AlunoAdminController {
     }
     
     @DeleteMapping("/excluir/{cpf}")
+    @Operation(summary = "Exclui um aluno por CPF.")
     public ResponseEntity<AlunoRespostaDTO> excluir(@PathVariable("cpf") String cpf){
         Aluno aluno = alunoService.excluir(cpf);
         AlunoRespostaDTO resposta = new AlunoRespostaDTO(aluno);
@@ -54,6 +58,7 @@ public class AlunoAdminController {
     }
 
     @PatchMapping("/ativar/{cpf}")
+    @Operation(summary = "Ativa um aluno por cpf.")
     public ResponseEntity<AlunoRespostaDTO> ativar(@PathVariable("cpf") String cpf){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails user = (UserDetails) authentication.getPrincipal();
@@ -65,6 +70,7 @@ public class AlunoAdminController {
     }
 
     @PutMapping("/atualizar/{cpf}")
+    @Operation(summary = "Atualiza um aluno por cpf.")
     public ResponseEntity<RespostaAtualizarAlunoDTO> atualizar(@PathVariable("cpf") String cpf,
                                                         @RequestParam(name = "papel", defaultValue = "USUARIO") Papel papel, 
                                                         @RequestBody @Valid AtualizarAlunoDTO alunoDTO) {
