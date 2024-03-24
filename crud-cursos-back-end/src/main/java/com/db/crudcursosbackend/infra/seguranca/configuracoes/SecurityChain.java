@@ -27,6 +27,8 @@ public class SecurityChain {
                     .requestMatchers("/contatos/**").hasAuthority("ADMIN")
                     .requestMatchers("/cursos/**").hasAuthority("ADMIN")
                     .requestMatchers("/contatos/**").hasAuthority("ADMIN")
+                    .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                    .requestMatchers("/usuario/**").hasAnyAuthority("ADMIN", "USUARIO")
                     .anyRequest().permitAll())
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))

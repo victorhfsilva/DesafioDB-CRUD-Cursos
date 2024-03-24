@@ -1,4 +1,4 @@
-package com.db.crudcursosbackend.controller.usuario.aluno;
+package com.db.crudcursosbackend.controller.usuario.professor;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -16,10 +16,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import com.db.crudcursosbackend.domain.usuario.aluno.Aluno;
-import com.db.crudcursosbackend.domain.usuario.aluno.dtos.AlunoDTO;
-import com.db.crudcursosbackend.domain.usuario.aluno.dtos.AtualizarAlunoDTO;
-import com.db.crudcursosbackend.domain.usuario.aluno.servicos.AlunoService;
+import com.db.crudcursosbackend.domain.usuario.professor.Professor;
+import com.db.crudcursosbackend.domain.usuario.professor.dtos.ProfessorDTO;
+import com.db.crudcursosbackend.domain.usuario.professor.dtos.AtualizarProfessorDTO;
+import com.db.crudcursosbackend.domain.usuario.professor.servicos.ProfessorService;
 import com.db.crudcursosbackend.domain.usuario.contato.Contato;
 import com.db.crudcursosbackend.domain.usuario.contato.ContatoBuilder;
 import com.db.crudcursosbackend.domain.usuario.contato.dtos.ContatoDTO;
@@ -28,7 +28,6 @@ import com.db.crudcursosbackend.domain.usuario.estado.Estado;
 import com.db.crudcursosbackend.domain.usuario.papel.Papel;
 import com.db.crudcursosbackend.domain.usuario.pessoa.Pessoa;
 import com.db.crudcursosbackend.domain.usuario.pessoa.servicos.PessoaService;
-import com.db.crudcursosbackend.domain.usuario.professor.Professor;
 import com.db.crudcursosbackend.domain.usuario.professor.ProfessorBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -38,7 +37,7 @@ import java.time.LocalDate;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-class AlunoAdminControllerTest {
+class ProfessorAdminControllerTest {
     
     @Autowired
     private MockMvc mockMvc;
@@ -47,10 +46,10 @@ class AlunoAdminControllerTest {
     private PasswordEncoder passwordEncoder;
 
     @InjectMocks
-    private AlunoAdminController pessoaAdminController;
+    private ProfessorAdminController pessoaAdminController;
 
     @MockBean
-    private AlunoService alunoService;
+    private ProfessorService professorService;
 
     @MockBean
     private PessoaService pessoaService;
@@ -91,7 +90,7 @@ class AlunoAdminControllerTest {
 
         List<EnderecoDTO> enderecosDTOs = List.of(enderecoDTO1, enderecoDTO2);
 
-        AlunoDTO alunoDTO = AlunoDTO.builder().nome("Nome")
+        ProfessorDTO professorDTO = ProfessorDTO.builder().nome("Nome")
                                                     .sobrenome("Sobrenome")
                                                     .cpf("73565638435")
                                                     .senha("L33tP@swd")
@@ -100,7 +99,7 @@ class AlunoAdminControllerTest {
                                                     .enderecos(enderecosDTOs)
                                                     .build();
         
-        Aluno aluno = alunoDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
+        Professor professor = professorDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
 
         ProfessorBuilder professorBuilder = new ProfessorBuilder();
         ContatoBuilder contatoBuilder = new ContatoBuilder();
@@ -117,9 +116,9 @@ class AlunoAdminControllerTest {
 
         when(pessoaService.buscarPorCpf("admin")).thenReturn(editor);
         
-        when(alunoService.desativar(eq("73565638435"), any())).thenReturn(aluno);
+        when(professorService.desativar(eq("73565638435"), any())).thenReturn(professor);
 
-        mockMvc.perform(MockMvcRequestBuilders.patch("/admin/aluno/desativar/73565638435"))
+        mockMvc.perform(MockMvcRequestBuilders.patch("/admin/professor/desativar/73565638435"))
                                                 .andExpect(MockMvcResultMatchers.status().isOk())
                                                 .andExpect(MockMvcResultMatchers.jsonPath("$.cpf").value("73565638435"))
                                                 .andExpect(MockMvcResultMatchers.jsonPath("$.nome").value("Nome"));
@@ -153,7 +152,7 @@ class AlunoAdminControllerTest {
 
         List<EnderecoDTO> enderecosDTOs = List.of(enderecoDTO1, enderecoDTO2);
 
-        AlunoDTO alunoDTO = AlunoDTO.builder().nome("Nome")
+        ProfessorDTO professorDTO = ProfessorDTO.builder().nome("Nome")
                                                     .sobrenome("Sobrenome")
                                                     .cpf("73565638435")
                                                     .senha("L33tP@swd")
@@ -162,7 +161,7 @@ class AlunoAdminControllerTest {
                                                     .enderecos(enderecosDTOs)
                                                     .build();
         
-        Aluno aluno = alunoDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
+        Professor professor = professorDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
 
         ProfessorBuilder pessoaBuilder = new ProfessorBuilder();
         ContatoBuilder contatoBuilder = new ContatoBuilder();
@@ -180,9 +179,9 @@ class AlunoAdminControllerTest {
 
         when(pessoaService.buscarPorCpf("admin")).thenReturn(editor);
         
-        when(alunoService.ativar(eq("73565638435"), any())).thenReturn(aluno);
+        when(professorService.ativar(eq("73565638435"), any())).thenReturn(professor);
 
-        mockMvc.perform(MockMvcRequestBuilders.patch("/admin/aluno/ativar/73565638435")
+        mockMvc.perform(MockMvcRequestBuilders.patch("/admin/professor/ativar/73565638435")
                                                 .header("Authorization", "Bearer tokenValido"))
                                                 .andExpect(MockMvcResultMatchers.status().isOk())
                                                 .andExpect(MockMvcResultMatchers.jsonPath("$.cpf").value("73565638435"))
@@ -217,7 +216,7 @@ class AlunoAdminControllerTest {
 
         List<EnderecoDTO> enderecosDTOs = List.of(enderecoDTO1, enderecoDTO2);
 
-        AlunoDTO alunoDTO = AlunoDTO.builder().nome("Nome")
+        ProfessorDTO professorDTO = ProfessorDTO.builder().nome("Nome")
                                                     .sobrenome("Sobrenome")
                                                     .cpf("73565638435")
                                                     .senha("L33tP@swd")
@@ -226,11 +225,11 @@ class AlunoAdminControllerTest {
                                                     .enderecos(enderecosDTOs)
                                                     .build();
         
-        Aluno aluno = alunoDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
+        Professor professor = professorDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
 
-        when(alunoService.excluir("73565638435")).thenReturn(aluno);
+        when(professorService.excluir("73565638435")).thenReturn(professor);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/admin/aluno/excluir/73565638435"))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/admin/professor/excluir/73565638435"))
                                                 .andExpect(MockMvcResultMatchers.status().isOk())
                                                 .andExpect(MockMvcResultMatchers.jsonPath("$.cpf").value("73565638435"))
                                                 .andExpect(MockMvcResultMatchers.jsonPath("$.nome").value("Nome"));
@@ -244,7 +243,7 @@ class AlunoAdminControllerTest {
                                                     .celular("123456789")
                                                     .build();
 
-        AtualizarAlunoDTO alunoDTO = AtualizarAlunoDTO.builder().nome("Nome")
+        AtualizarProfessorDTO professorDTO = AtualizarProfessorDTO.builder().nome("Nome")
                                                     .sobrenome("Sobrenome")
                                                     .cpf("73565638435")
                                                     .senha("L33tP@swd")
@@ -252,9 +251,9 @@ class AlunoAdminControllerTest {
                                                     .contato(contatoDTO)
                                                     .build();
         
-        String pessoaJson = objectMapper.writeValueAsString(alunoDTO);
+        String pessoaJson = objectMapper.writeValueAsString(professorDTO);
         
-        Aluno aluno = alunoDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
+        Professor professor = professorDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
         
         ProfessorBuilder professorBuilder = new ProfessorBuilder();
         ContatoBuilder contatoBuilder = new ContatoBuilder();
@@ -271,9 +270,9 @@ class AlunoAdminControllerTest {
 
         when(pessoaService.buscarPorCpf("admin")).thenReturn(editor);
 
-        when(alunoService.atualizar(eq("73565638435"), any(), any())).thenReturn(aluno);
+        when(professorService.atualizar(eq("73565638435"), any(), any())).thenReturn(professor);
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/admin/aluno/atualizar/73565638435")
+        mockMvc.perform(MockMvcRequestBuilders.put("/admin/professor/atualizar/73565638435")
                                                 .contentType("application/json")
                                                 .content(pessoaJson)
                                                 .param("papel", "ADMIN"))
@@ -290,7 +289,7 @@ class AlunoAdminControllerTest {
                                                     .celular("123456789")
                                                     .build();
 
-        AtualizarAlunoDTO alunoDTO = AtualizarAlunoDTO.builder().nome("Nome")
+        AtualizarProfessorDTO professorDTO = AtualizarProfessorDTO.builder().nome("Nome")
                                                     .sobrenome("Sobrenome")
                                                     .cpf("73565638430")
                                                     .senha("L33tP@swd")
@@ -298,9 +297,9 @@ class AlunoAdminControllerTest {
                                                     .contato(contatoDTO)
                                                     .build();
         
-        String pessoaJson = objectMapper.writeValueAsString(alunoDTO);
+        String pessoaJson = objectMapper.writeValueAsString(professorDTO);
         
-        Aluno aluno = alunoDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
+        Professor professor = professorDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
         ProfessorBuilder pessoaBuilder = new ProfessorBuilder();
         ContatoBuilder contatoBuilder = new ContatoBuilder();
 
@@ -317,9 +316,9 @@ class AlunoAdminControllerTest {
 
         when(pessoaService.buscarPorCpf("admin")).thenReturn(editor);
 
-        when(alunoService.atualizar(eq("73565638435"), any(), any())).thenReturn(aluno);
+        when(professorService.atualizar(eq("73565638435"), any(), any())).thenReturn(professor);
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/admin/aluno/atualizar/73565638435")
+        mockMvc.perform(MockMvcRequestBuilders.put("/admin/professor/atualizar/73565638435")
                                                 .contentType("application/json")
                                                 .content(pessoaJson))
                                                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
@@ -333,7 +332,7 @@ class AlunoAdminControllerTest {
                                                     .celular("123456789")
                                                     .build();
                                                     
-        AtualizarAlunoDTO alunoDTO = AtualizarAlunoDTO.builder().nome("Nome")
+        AtualizarProfessorDTO professorDTO = AtualizarProfessorDTO.builder().nome("Nome")
                                                     .sobrenome("Sobrenome")
                                                     .cpf("73565638435")
                                                     .senha("senha123")
@@ -341,9 +340,9 @@ class AlunoAdminControllerTest {
                                                     .contato(contatoDTO)
                                                     .build();
         
-        String alunoJson = objectMapper.writeValueAsString(alunoDTO);
+        String professorJson = objectMapper.writeValueAsString(professorDTO);
         
-        Aluno aluno = alunoDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
+        Professor professor = professorDTO.converterParaEntidade(passwordEncoder, Papel.USUARIO);
         
         ProfessorBuilder pessoaBuilder = new ProfessorBuilder();
         ContatoBuilder contatoBuilder = new ContatoBuilder();
@@ -360,11 +359,11 @@ class AlunoAdminControllerTest {
 
         when(pessoaService.buscarPorCpf("admin")).thenReturn(editor);
 
-        when(alunoService.atualizar(eq("73565638435"), any(), any())).thenReturn(aluno);
+        when(professorService.atualizar(eq("73565638435"), any(), any())).thenReturn(professor);
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/admin/aluno/atualizar/73565638435")
+        mockMvc.perform(MockMvcRequestBuilders.put("/admin/professor/atualizar/73565638435")
                                                 .contentType("application/json")
-                                                .content(alunoJson)
+                                                .content(professorJson)
                                                 .header("Authorization", "Bearer tokenValido"))
                                                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
