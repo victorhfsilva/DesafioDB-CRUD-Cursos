@@ -48,7 +48,7 @@ public class Curso extends EntidadeBaseAudicao {
         joinColumns = @JoinColumn(name = "curso_id"),
         inverseJoinColumns = @JoinColumn(name = "aluno_id")
     )
-    List<Aluno> alunos;
+    private List<Aluno> alunos;
 
     public Curso(
         boolean ativo,
