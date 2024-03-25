@@ -37,6 +37,10 @@ Recomenda-se que esta conta seja atualizada após feito login.
 - PostgreSQL
 - Docker
 
+## Diagrama de Classes
+
+![Diagrama de Classes](./CRUD%20Cursos%20-%20DB.png)
+
 ## Variáveis de Ambiente
 
 Para reproduzir as configurações deste projeto é necessário criar um arquivo .env dentro da pasta `crud-pessoa-back-end` com as seguintes variáveis de ambiente:
