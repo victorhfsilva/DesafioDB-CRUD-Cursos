@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -112,7 +113,7 @@ public class CursoAdminController {
         return ResponseEntity.status(HttpStatus.OK).body(resposta);
     }
 
-    @PatchMapping("/verificarCadastro/{id}/aluno/{cpf}")
+    @GetMapping("/verificarCadastro/{id}/aluno/{cpf}")
     @Operation(summary = "Verifica se aluno está cadastrado em curso.")
     public ResponseEntity<Boolean> verificarCadastroAluno(@PathVariable("id") Long id,
                                                         @PathVariable("cpf") String cpf) {
@@ -131,6 +132,6 @@ public class CursoAdminController {
         Curso novoCurso = cursoDTO.converterParaEntidade();
         Curso curso = cursoService.registrar(novoCurso, cpf, editor);
         CursoRespostaDTO resposta = new CursoRespostaDTO(curso);
-        return ResponseEntity.status(HttpStatus.OK).body(resposta);
+        return ResponseEntity.status(HttpStatus.CREATED).body(resposta);
     }
 }
