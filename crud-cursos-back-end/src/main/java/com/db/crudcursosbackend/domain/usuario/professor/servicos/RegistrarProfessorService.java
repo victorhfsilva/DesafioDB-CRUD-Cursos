@@ -48,6 +48,12 @@ public class RegistrarProfessorService implements IRegistrarProfessorService {
         if(cursos != null){
             cursos.stream().forEach(curso -> {
                 curso.setProfessor(professorSalvo);
+                curso.setAtivo(true);
+                Contato contato = professorSalvo.getContato();
+                if (contato != null){
+                    curso.setCriadoPor(contato.getEmail());
+                    curso.setCriadoAs(LocalDateTime.now());
+                }
                 cursoRepository.save(curso);
             });
         }

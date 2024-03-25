@@ -1,16 +1,11 @@
 package com.db.crudcursosbackend.domain.cursos.servicos;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
 import com.db.crudcursosbackend.domain.cursos.Curso;
 import com.db.crudcursosbackend.domain.cursos.interfaces.IRemoverAlunoService;
 import com.db.crudcursosbackend.domain.cursos.repositorios.CursoRepository;
 import com.db.crudcursosbackend.domain.usuario.aluno.Aluno;
-import com.db.crudcursosbackend.domain.usuario.aluno.repositorios.AlunoRepository;
-import com.db.crudcursosbackend.infra.excecoes.EntidadeDesativada;
 
 import lombok.AllArgsConstructor;
 
