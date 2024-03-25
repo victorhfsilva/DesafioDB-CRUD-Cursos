@@ -1,0 +1,32 @@
+version: '2.4'
+
+services:
+  crud-curso-dev-db:
+    image: postgres
+    environment:
+        - POSTGRES_USER=${POSTGRES_USER}
+        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+        - POSTGRES_DB=${POSTGRES_DEV_DB}
+    ports:
+      - "5433:5432"
+    restart: always
+    networks:
+      - crud-curso-network 
+   
+  crud-curso-back-end:
+    build:
+      dockerfile: ./Dockerfile
+      context: ./crud-cursos-back-end
+    image: victorhfsilva/crud-cursos-back-end
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./crud-cursos-back-end/.env
+    depends_on:
+      - crud-curso-dev-db
+    networks:
+      - crud-curso-network 
+
+networks:
+  crud-curso-network:
+    driver: bridge
