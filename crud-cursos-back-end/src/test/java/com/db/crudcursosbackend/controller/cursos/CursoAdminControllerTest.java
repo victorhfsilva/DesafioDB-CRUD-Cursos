@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.db.crudcursosbackend.controller.curso.CursoAdminController;
 import com.db.crudcursosbackend.domain.cursos.Curso;
+import com.db.crudcursosbackend.domain.cursos.CursoBuilder;
 import com.db.crudcursosbackend.domain.cursos.dtos.CursoDTO;
 import com.db.crudcursosbackend.domain.cursos.servicos.CursoService;
 import com.db.crudcursosbackend.domain.usuario.contato.Contato;
@@ -88,6 +89,41 @@ class CursoAdminControllerTest {
 
     @Test
     @WithMockUser(username = "admin", authorities = {"ADMIN"})
+    void dadoUmCurso_quandoAtivado_deveRetornarSeusDados() throws Exception{
+    
+        ProfessorBuilder professorBuilder = new ProfessorBuilder();
+        ContatoBuilder contatoBuilder = new ContatoBuilder();
+
+        Contato contatoEditor = contatoBuilder.celular("123456789")
+                                                .email("admin@db.com")
+                                                .build();
+
+        Professor editor  = professorBuilder.ativo(true)
+                                        .cpf("admin")
+                                        .nome("admin")
+                                        .senha("admin")
+                                        .contato(contatoEditor)
+                                        .build();
+
+        when(pessoaService.buscarPorCpf("admin")).thenReturn(editor);
+
+        CursoDTO cursoDTO = CursoDTO.builder().nome("Matemática") 
+                                                .descricao("Matemática para todos")
+                                                .cargaHoraria(300)
+                                                .build();
+
+        Curso curso = cursoDTO.converterParaEntidade();
+
+        when(cursoService.ativar(eq(1L), eq(editor))).thenReturn(curso);
+
+        mockMvc.perform(MockMvcRequestBuilders.patch("/admin/curso/ativar/1"))
+                                                .andExpect(MockMvcResultMatchers.status().isOk())
+                                                .andExpect(MockMvcResultMatchers.jsonPath("$.nome").value("Matemática"))
+                                                .andExpect(MockMvcResultMatchers.jsonPath("$.cargaHoraria").value("300"));
+    }
+
+    @Test
+    @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void dadoUmCurso_quandoExcluido_deveRetornarSeusDados() throws Exception{
     
         CursoDTO cursoDTO = CursoDTO.builder().nome("Matemática") 
@@ -104,4 +140,89 @@ class CursoAdminControllerTest {
                                                 .andExpect(MockMvcResultMatchers.jsonPath("$.nome").value("Matemática"))
                                                 .andExpect(MockMvcResultMatchers.jsonPath("$.cargaHoraria").value("300"));
     }
+
+    @Test
+    @WithMockUser(username = "admin", authorities = {"ADMIN"})
+    void dadoUmCurso_quandoAtualizado_deveRetornarDadosAtualizados() throws Exception{
+    
+        ProfessorBuilder professorBuilder = new ProfessorBuilder();
+        ContatoBuilder contatoBuilder = new ContatoBuilder();
+
+        Contato contatoEditor = contatoBuilder.celular("123456789")
+                                                .email("admin@db.com")
+                                                .build();
+
+        Professor editor  = professorBuilder.ativo(true)
+                                        .cpf("admin")
+                                        .nome("admin")
+                                        .senha("admin")
+                                        .contato(contatoEditor)
+                                        .build();
+
+        when(pessoaService.buscarPorCpf("admin")).thenReturn(editor);
+
+        CursoDTO cursoDTO = CursoDTO.builder().nome("Matemática") 
+                                                .descricao("Matemática para todos")
+                                                .cargaHoraria(300)
+                                                .build();
+
+        String cursoJson = objectMapper.writeValueAsString(cursoDTO);
+        Curso curso = cursoDTO.converterParaEntidade();
+
+        when(cursoService.atualizar(1L, curso, editor)).thenReturn(curso);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/admin/curso/atualizar/1")
+                                    .contentType("application/json")
+                                                .content(cursoJson))
+                                                .andExpect(MockMvcResultMatchers.status().isOk())
+                                                .andExpect(MockMvcResultMatchers.jsonPath("$.nome").value("Matemática"))
+                                                .andExpect(MockMvcResultMatchers.jsonPath("$.cargaHoraria").value("300"));
+    }
+
+    @Test
+    @WithMockUser(username = "admin", authorities = {"ADMIN"})
+    void dadoUmCurso_quandoAtualizadProfessoro_deveRetornarProfessorAtualizados() throws Exception{
+    
+        ProfessorBuilder professorBuilder = new ProfessorBuilder();
+        ContatoBuilder contatoBuilder = new ContatoBuilder();
+
+        Contato contatoEditor = contatoBuilder.celular("123456789")
+                                                .email("admin@db.com")
+                                                .build();
+
+        Professor editor  = professorBuilder.ativo(true)
+                                        .cpf("admin")
+                                        .nome("admin")
+                                        .senha("admin")
+                                        .contato(contatoEditor)
+                                        .build();
+
+        when(pessoaService.buscarPorCpf("admin")).thenReturn(editor);
+        
+        Contato contatoProfessor = contatoBuilder.celular("1234453789")
+                                                .email("professor@db.com")
+                                                .build();
+
+        Professor professor  = professorBuilder.ativo(true)
+                                        .cpf("64174892563")
+                                        .nome("professor")
+                                        .senha("senha123")
+                                        .contato(contatoProfessor)
+                                        .build();
+
+        CursoBuilder cursoBuilder = new CursoBuilder();
+
+        Curso curso = cursoBuilder.nome("Matemática") 
+                                            .descricao("Matemática para todos")
+                                            .cargaHoraria(300)
+                                            .professor(professor)
+                                            .build();
+
+        when(cursoService.atualizarProfessor(1L, "64174892563", editor)).thenReturn(curso);
+
+        mockMvc.perform(MockMvcRequestBuilders.patch("/admin/curso/atualizar/1/professor/64174892563"))
+                                                .andExpect(MockMvcResultMatchers.status().isOk())
+                                                .andExpect(MockMvcResultMatchers.jsonPath("$.nome").value("professor"));
+    }
+
 }
